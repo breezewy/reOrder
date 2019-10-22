@@ -48,6 +48,7 @@ export default {
       let pageUrl = window.location.href;
       let index = pageUrl.lastIndexOf("/");
       let orderID = pageUrl.slice(index + 1);
+      sessionStorage.setItem("id", orderID);
       // let orderID = "f39244240ad60e4bca564ee1955b372d2bae248aa52e6034";
       this.isLoading = true;
       getReOrder({ orderNo: orderID }).then(res => {

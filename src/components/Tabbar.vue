@@ -1,8 +1,8 @@
 <template>
   <div>
     <van-tabbar v-model="active" router>
-      <van-tabbar-item name="list" icon="home-o" to="/">票型列表</van-tabbar-item>
-      <van-tabbar-item name="booked" icon="search" to="booked">已预约订单</van-tabbar-item>
+      <van-tabbar-item name="list" icon="home-o" :to="{path:`/home/${id}`}">票型列表</van-tabbar-item>
+      <van-tabbar-item name="booked" icon="search" to="/booked">已预约订单</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -16,8 +16,12 @@ export default {
   name: "tabbar",
   data() {
     return {
-      active: "list"
+      active: "list",
+      id:""
     };
+  },
+  created(){
+    this.id = sessionStorage.getItem("id");
   },
   //tab切换时候，根据当前页面的路由，决定tab是否为高亮
   mounted() {

@@ -126,7 +126,7 @@ export default {
   },
   created() {
     this.item = JSON.parse(sessionStorage.getItem("item"));
-    console.log(this.item.containShow);
+    console.log(this.item)
     this.id = sessionStorage.getItem("orderId");
     this.ticketName = this.item.name;
     this.getCalendarList(this.item.id);
@@ -267,6 +267,7 @@ export default {
       background: -o-linear-gradient(to right, #fdc830, #f37335);
       background: -moz-linear-gradient(to right, #fdc830, #f37335);
       background: linear-gradient(to right, #fdc830, #f37335);
+      text-align: center;
     }
   }
 }

@@ -62,12 +62,14 @@ export default {
 </script>
 
 
-<style lang="scss">
-ul {
+<style lang="scss" scoped>
+.bookedContainer{
   background: #1e94db;
   height: 100vh;
   box-sizing: border-box;
   padding: 1rem 0.5rem 0;
+
+ul {
   li {
     background: #fff;
     padding: 0.4rem;
@@ -96,5 +98,6 @@ ul {
       }
     }
   }
+}
 }
 </style>

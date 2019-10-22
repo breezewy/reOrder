@@ -16,7 +16,7 @@ module.exports = {
       //   // target: 'http://193.1.0.135:21014',
       //   changeOrigin: true,
       //   pathRewrite: {
-      //     '^/api': ''
+      //     '^/': ''
       //   }
       // }
     },

@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import { getOrder } from "../utils/api";
-import Tabbar from "../components/Tabbar";
+import { getOrder } from "../../utils/api";
+import Tabbar from "../../components/Tabbar";
 export default {
   data() {
     return {

@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/Home'
-import BookedOrder from '@/pages/BookedOrder'
-import BookingOrder from '@/pages/BookingOrder'
+import Home from '@/pages/reOrder/Home'
+import BookedOrder from '@/pages/reOrder/BookedOrder'
+import BookingOrder from '@/pages/reOrder/BookingOrder'
+import Face from '@/pages/face/Face'
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +36,14 @@ export default new Router({
         title: '订单预约'
       },
       component: BookingOrder
+    },
+    {
+      path: '/face',
+      name: 'face',
+      meta: {
+        title: '人脸订单查询'
+      },
+      component: Face
     }
   ]
 })

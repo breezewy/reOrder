@@ -81,8 +81,8 @@ import {
   getShow,
   getUserOrderInfo,
   downOrder
-} from "../utils/api";
-import { FormatDate } from "../utils/Format";
+} from "../../utils/api";
+import { FormatDate } from "../../utils/Format";
 
 import Calendar from "v-calendar/lib/components/calendar.umd";
 import DatePicker from "v-calendar/lib/components/date-picker.umd";

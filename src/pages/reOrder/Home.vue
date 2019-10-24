@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { getReOrder, getTicket } from "../utils/api";
-import Tabbar from "../components/Tabbar";
+import { getReOrder, getTicket } from "../../utils/api";
+import Tabbar from "../../components/Tabbar";
 export default {
   name: "home",
   data() {
@@ -117,11 +117,12 @@ export default {
   }
   .relate{
     background:#fff;
-    padding: 0.4rem;
+    padding: 0.2rem 0.4rem 0.4rem;
     border-radius: 0.2rem;
     .item{
       background:#eee;
       padding:0.3rem  0.3rem 0.2rem;
+      margin-top:0.3rem;
       .item-name{
         line-height: 1rem;
       }

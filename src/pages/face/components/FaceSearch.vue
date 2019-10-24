@@ -12,6 +12,7 @@
                 show-action
                 shape="round"
                 @search="onSearch"
+                @clear="handleClear"
                 v-if="value == 0" 
                 v-model="faceForm.mobile"
                 >
@@ -48,7 +49,7 @@
                 <div slot="action" @click="onSearch">搜索</div>
             </van-search>
         </div>
-        <face-list  :paramData="faceForm" v-if="showFaceList"></face-list>
+        <face-list :faceList="faceList"></face-list>
     </div>
 
 </template>
@@ -56,9 +57,15 @@
 <script>
 import Vue from 'vue';
 import { Search } from 'vant';
+import FaceList from './FaceList'
+
+
 Vue.use(Search);
 export default {
     name:"FaceSearch",
+    components:{
+        FaceList
+    },
     data(){
         return {
             value:0,
@@ -72,17 +79,32 @@ export default {
                     pageSize:4
                 }
             },
-            showFaceList:false
+            faceList:[],
+            hideFaceList:true
+
         }
     },
      methods:{
+        handleClear(){
+            this.faceForm={
+                mobile:"",
+                name:"",
+                idCard:"",
+                orderNo:"",
+                page:{
+                    pageNum:0,
+                    pageSize:4
+                }
+            },
+            this.$emit('hideList',this.hideFaceList)
+        },
         onSearch(){
             switch(this.value){
                 case 0:
                         if(this.checkPhone(this.faceForm.mobile)){
                             this.deleteProperty(this.faceForm)
-                            console.log(this.faceForm)
                             this.$emit('change',this.faceForm)
+                            console.log('触发change')
                         }
                         break;
                 case 1:

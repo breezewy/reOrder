@@ -10,8 +10,10 @@ import VueAxios from 'vue-axios'
 import './assets/styles/border.css'
 import './assets/styles/reset.css'
 import { Toast } from "vant";
+import VueWechatTitle from 'vue-wechat-title'
 
 
+Vue.use(VueWechatTitle)
 Vue.use(Toast);
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
@@ -25,6 +27,7 @@ new Vue({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('aaaa')
   window.document.title = to.meta.title;
   next()
 })

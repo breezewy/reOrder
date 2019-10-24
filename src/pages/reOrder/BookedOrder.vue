@@ -1,5 +1,5 @@
 <template>
-  <div class="bookedContainer">
+  <div class="bookedContainer" v-wechat-title="$route.meta.title">
     <ul>
       <li v-for="item of childOrder" :key="item.id">
         <div class="header">

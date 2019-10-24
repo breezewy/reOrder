@@ -1,6 +1,6 @@
 <template>
-    <div class="face">
-        <face-search  @change="handleChange"></face-search>
+    <div class="face" v-wechat-title="$route.meta.title">
+        <face-search  @change="handleChange" @hideList="handleHide"></face-search>
         <face-list :paramData="faceForm"  v-if="showFaceList"></face-list>
     </div>
 
@@ -24,10 +24,11 @@ export default {
     },
     methods:{
         handleChange(value){
-            if(value){
-                this.showFaceList = true
-                this.faceForm = value
-            }
+            this.showFaceList = true
+            this.faceForm = value
+        },
+        handleHide(value){
+            this.showFaceList = !value
         }
     }
     

@@ -43,7 +43,7 @@
                 </div>
                 <div class="button">
                     <van-button type="info" size="small"  v-if="item.deleteFlag == 0" @click="resetFace(item.orderNo)">重置人脸</van-button>
-                    <van-button type="warning" size="small" v-if="item.deleteFlag == 0" @click="deleteFace(item.id)">删除人脸</van-button>
+                    <!-- <van-button type="warning" size="small" v-if="item.deleteFlag == 0" @click="deleteFace(item.id)">删除人脸</van-button> -->
                     <van-button type="primary" size="small" v-if="item.deleteFlag == 1" @click="restoreFace(item.id)">恢复人脸</van-button>
                 </div>
             </van-cell>
@@ -66,7 +66,7 @@ export default {
     name:'facelist',
     props:{
         list:Array,
-        paramData:Object
+        paramData:Object,
     },
     data(){
         return {
@@ -76,16 +76,17 @@ export default {
             concatFaceList:[],
             total:0,   //返回的总页数
             index:0,   //记录请求的次数
-            param:this.paramData,
-            error:false
+            error:false,
+            form:this.paramData
         }
     },
     created(){
-        this.getList(this.paramData)
+        this.getList()
     },
     methods:{
         getList(){
-            getFaceList(this.param)
+            if(!this.form) return 
+            getFaceList(this.form)
                 .then(res=>{
                     if (res.data.code != 200) {
                         this.$toast.fail(res.data.error);

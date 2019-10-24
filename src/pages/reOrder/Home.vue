@@ -1,5 +1,5 @@
 <template>
-  <div class="homeContainer">
+  <div class="homeContainer" v-wechat-title="$route.meta.title">
     <div class="header">
       <!-- <p class="header-title">{{dmqTicket.productName}}</p> -->
       <p class="header-title">宋城千古情</p>

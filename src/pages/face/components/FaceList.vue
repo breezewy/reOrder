@@ -17,18 +17,28 @@
                     <div class="title">订单号：</div>
                     <div class="content">{{item.orderNo}}</div>
                 </div>
+                <div class="header">
+                    <div class="title">联系人：</div>
+                    <div class="content">{{item.linkName}}</div>
+                </div>
+                <div class="header">
+                    <div class="title">手机号：</div>
+                    <div class="content">{{item.linkMobile}}</div>
+                </div>
+                <div class="header">
+                    <div class="title">证件号：</div>
+                    <div class="content">{{item.linkIdcard}}</div>
+                </div>
+                <div class="header">
+                    <div class="title">产品名称：</div>
+                    <div class="content">{{item.productName}}</div>
+                </div>
                 <div class="wrapper">
                      <div class="imgWrapper" v-for="innerItem of item.faceDetails" :key="innerItem.visitorId">
                         <img :src="innerItem.faceUrl" alt="" v-if="innerItem.faceUrl">
                         <img src="../../../assets/placeholder.png" alt="" v-else>
                         <img :src="innerItem.aibeeFaceUrl" alt="" v-if="innerItem.aibeeFaceUrl">
                         <img src="../../../assets/placeholder.png" alt="" v-else>
-                    </div>
-                    <div class="infoWrapper">
-                        <div class="header">
-                            <div class="title">景区：</div>
-                            <div class="content">{{item.parkName}}</div>
-                        </div>
                     </div>
                 </div>
                 <div class="button">
@@ -148,35 +158,24 @@ export default {
     .header{
         display:flex;
         .title{
-            width:2.5rem;
+            width:3rem;
             color:#777;
         }
         .content{
             flex:1;
+            padding-left:0.4rem;
         }
     }
     .wrapper{
         overflow: hidden;
+        margin-top:0.2rem;
         .imgWrapper{
-            margin-top:0.1rem;
+            font-size:0;
             float:left;
+            margin-top:0.2rem;
             img{
                 width:3rem;
                 margin-right:0.2rem;
-            }
-        }
-        .infoWrapper{
-            float:left;
-            .header{
-                display:flex;
-                margin-left:0.3rem;
-                .title{
-                    width:2rem;
-                    color:#777;
-                }
-                .content{
-                    flex:1;
-                }
             }
         }
     }

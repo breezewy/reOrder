@@ -23,6 +23,7 @@
                 show-action
                 shape="round"
                 @search="onSearch"
+                @clear="handleClear"
                 v-if="value == 1" 
                 v-model="faceForm.name"
                 >
@@ -33,6 +34,7 @@
                 show-action
                 shape="round"
                 @search="onSearch"
+                @clear="handleClear"
                 v-if="value == 2" 
                 v-model="faceForm.idCard"
                 >
@@ -43,6 +45,7 @@
                 show-action
                 shape="round"
                 @search="onSearch"
+                @clear="handleClear"
                 v-if="value == 3" 
                 v-model="faceForm.orderNo"
                 >

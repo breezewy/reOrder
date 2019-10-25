@@ -35,10 +35,16 @@
                 </div>
                 <div class="wrapper">
                      <div class="imgWrapper" v-for="innerItem of item.faceDetails" :key="innerItem.visitorId">
-                        <img :src="innerItem.faceUrl" alt="" v-if="innerItem.faceUrl">
-                        <img src="../../../assets/placeholder.png" alt="" v-else>
-                        <img :src="innerItem.aibeeFaceUrl" alt="" v-if="innerItem.aibeeFaceUrl">
-                        <img src="../../../assets/placeholder.png" alt="" v-else>
+                        <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click="showPopUp01(innerItem)">
+                        <img src="../../../assets/placeholder.png"  v-else>
+                        <van-popup v-model="ashow">
+                            <img style='width:8rem;height:8rem;margin-right:0' :src="asrc" ref="aface">
+                        </van-popup>
+                        <img :src="innerItem.aibeeFaceUrl" v-if="innerItem.aibeeFaceUrl"  @click="showPopUp02(innerItem)">
+                        <img src="../../../assets/placeholder.png"  v-else >
+                         <van-popup v-model="bshow">
+                            <img style='width:8rem;height:8rem;margin-right:0' :src="bsrc" ref="bface">
+                        </van-popup>
                     </div>
                 </div>
                 <div class="button">
@@ -58,7 +64,9 @@ import { Button } from 'vant';
 import { getFaceList,deleteFace,resetFace,restoreFace} from '../../../utils/face'
 import { Dialog } from 'vant';
 import { List } from 'vant';
+import { Popup } from 'vant';
 
+Vue.use(Popup);
 Vue.use(List);
 Vue.use(Dialog);
 Vue.use(Button);
@@ -77,13 +85,30 @@ export default {
             total:0,   //返回的总页数
             index:0,   //记录请求的次数
             error:false,
-            form:this.paramData
+            form:this.paramData,
+            ashow:false,
+            bshow:false,
+            asrc:"",
+            bsrc:""
         }
     },
     created(){
         this.getList()
     },
     methods:{
+        showPopUp01(innerItem){
+            if(!this.ashow){
+                this.ashow = !this.ashow;
+                this.asrc = innerItem.faceUrl
+            }
+        },
+        showPopUp02(innerItem){
+            if(!this.bshow){
+                this.bshow = !this.bshow;
+                this.bsrc = innerItem.aibeeFaceUrl
+            }
+
+        },
         getList(){
             if(!this.form) return 
             getFaceList(this.form)

@@ -38,12 +38,12 @@
                         <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click="showPopUp01(innerItem)">
                         <img src="../../../assets/placeholder.png"  v-else>
                         <van-popup v-model="ashow">
-                            <img style='width:8rem;height:8rem;margin-right:0' :src="asrc" ref="aface">
+                            <img style='width:90vw;margin-right:0' :src="asrc" ref="aface">
                         </van-popup>
                         <img :src="innerItem.aibeeFaceUrl" v-if="innerItem.aibeeFaceUrl"  @click="showPopUp02(innerItem)">
                         <img src="../../../assets/placeholder.png"  v-else >
                          <van-popup v-model="bshow">
-                            <img style='width:8rem;height:8rem;margin-right:0' :src="bsrc" ref="bface">
+                            <img style='width:90vw;margin-right:0' :src="bsrc" ref="bface">
                         </van-popup>
                     </div>
                 </div>

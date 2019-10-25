@@ -10,6 +10,7 @@
             label="预约日期"
             right-icon="arrow-down"
             placeholder="请选择预约日期"
+            @click="selectDate"
             @click-right-icon="selectDate"
           />
           <van-field
@@ -18,6 +19,7 @@
             label="预约场次"
             right-icon="arrow-down"
             placeholder="请选择预约场次"
+            @click="selectShow"
             @click-right-icon="selectShow"
             v-if="item.containShow"
           ></van-field>
@@ -29,13 +31,13 @@
       <div class="info">
         <van-cell-group>
           <van-cell title="联系人" :value="userInfo.name" />
-          <van-cell title="联系电话" :value="userInfo.mobile" />
+          <van-cell title="手机号" :value="userInfo.mobile" />
           <van-cell title="证件号" :value="userInfo.idCard" />
         </van-cell-group>
       </div>
 
       <div class="subbmit" @click="handleClick">
-        <span>点击预约</span>
+        <span>预约</span>
       </div>
     </div>
     <div class="calendar" v-else>
@@ -64,6 +66,27 @@
         </van-cell-group>
       </van-radio-group>
     </van-popup>
+    <van-dialog
+        v-model="showConfirm"
+        title="确定预约吗？"
+        show-cancel-button
+        @confirm="goBooking"
+      >
+        <div class="confirm">
+           <div class="item">
+             <span class="item-title">预约日期：</span>
+             <span class="item-content">{{this.date}}</span>
+           </div>
+            <div class="item" v-if="this.times != ''">
+             <span class="item-title">预约场次：</span>
+             <span class="item-content">{{this.times}}</span>
+           </div>
+            <div class="item">
+             <span class="item-title">预约数量：</span>
+             <span class="item-content">{{this.number}}</span>
+           </div>
+        </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -86,7 +109,10 @@ import { FormatDate } from "../../utils/Format";
 
 import Calendar from "v-calendar/lib/components/calendar.umd";
 import DatePicker from "v-calendar/lib/components/date-picker.umd";
+import { Dialog } from 'vant';
 
+// 全局注册
+Vue.use(Dialog);
 Vue.use(RadioGroup);
 Vue.use(Radio);
 Vue.use(Popup);
@@ -107,9 +133,11 @@ export default {
       hideCalendar: true,
       calendarDate: null,
       show: false,
+      showConfirm:false,
       radio: "",
       userInfo: {},
       showList: [],
+      orderData:{},
       item: null,
       formats: {
         title: "MMMM YYYY",
@@ -125,8 +153,13 @@ export default {
     DatePicker
   },
   created() {
-    this.item = JSON.parse(sessionStorage.getItem("item"));
-    console.log(this.item)
+    let type = sessionStorage.getItem('type');
+    if(type != 2){
+      this.item = JSON.parse(sessionStorage.getItem("item"));
+    }else{
+      this.item = JSON.parse(sessionStorage.getItem("moreChooseItem"));
+    }
+    
     this.id = sessionStorage.getItem("orderId");
     this.ticketName = this.item.name;
     this.getCalendarList(this.item.id);
@@ -180,42 +213,62 @@ export default {
       this.show = false;
     },
     handleClick() {
-      let orderData = {};
-      if (this.item.containShow) {
-        if (this.date === "") {
-          this.$toast.fail("请先选择预约日期");
-          return;
-        } else if (this.times === "") {
-          this.$toast.fail("请先选择预约场次");
-          return;
+        if (this.item.containShow) {
+          if (this.date === "") {
+            this.$toast.fail("请先选择预约日期");
+            return;
+          } else if (this.times === "") {
+            this.$toast.fail("请先选择预约场次");
+            return;
+          }
+          this.orderData = {
+            number: this.number,
+            orderId: this.id,
+            playDate: this.date,
+            showTime: this.times,
+            ticketId: this.item.id
+          };
+        } else {
+          if (this.date === "") {
+            this.$toast.fail("请先选择预约日期");
+            return;
+          }
+           this.orderData = {
+            number: this.number,
+            orderId: this.id,
+            playDate: this.date,
+            ticketId: this.item.id
+          };
         }
-        orderData = {
-          number: this.number,
-          orderId: this.id,
-          playDate: this.date,
-          showTime: this.times,
-          ticketId: this.item.id
-        };
-      } else {
-        if (this.date === "") {
-          this.$toast.fail("请先选择预约日期");
-          return;
-        }
-        orderData = {
-          number: this.number,
-          orderId: this.id,
-          playDate: this.date,
-          ticketId: this.item.id
-        };
-      }
-
-      downOrder(orderData).then(res => {
-        if (res.data.code != 200) {
-          return this.$toast(res.data.error);
-        }
-        this.$toast.success("预约成功");
-        this.$router.push("/booked");
-      });
+        this.showConfirm = true;
+      // Dialog.confirm({
+      //   message: 
+      //   `
+      //    确定要预约吗?
+      //    预约日期：${this.date}
+      //    预约场次：${this.times}
+      //    数量：${this.number}
+      //   `
+      // }).then(() => {
+      //   downOrder(orderData).then(res => {
+      //     if (res.data.code != 200) {
+      //       return this.$toast(res.data.error);
+      //     }
+      //     this.$toast.success("预约成功");
+      //     this.$router.push("/booked");
+      //   });
+      // }).catch(() => {
+      //   console.log('取消')
+      // });
+    },
+    goBooking(){
+        downOrder(this.orderData).then(res => {
+          if (res.data.code != 200) {
+            return this.$toast(res.data.error);
+          }
+          this.$toast.success("预约成功");
+          this.$router.push("/booked");
+        });
     }
   }
 };
@@ -263,9 +316,6 @@ export default {
       border-radius: 0.5rem;
       padding: 0.5rem 0;
       color: #fff;
-      background: -webkit-linear-gradient(to right, #fdc830, #f37335);
-      background: -o-linear-gradient(to right, #fdc830, #f37335);
-      background: -moz-linear-gradient(to right, #fdc830, #f37335);
       background: linear-gradient(to right, #fdc830, #f37335);
       text-align: center;
     }
@@ -278,6 +328,27 @@ export default {
   }
   .van-cell__title {
     text-align: left;
+  }
+}
+.confirm{
+  .item:first-child{
+    margin-top:0.5rem;
+  }
+  .item{
+    text-align: center;
+    line-height: 1.2rem;
+    display: flex;
+    .item-title{
+      width:50%;
+      text-align: right;
+      padding-right:0.3rem;
+      color:#9c9c9c;
+    }
+    .item-content{
+      flex:1;
+      text-align: left;
+      padding-left:0.3rem;
+    }
   }
 }
 </style>

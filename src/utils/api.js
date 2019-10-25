@@ -66,3 +66,11 @@ export const getOrder = id => {
         method: 'get'
     })
 }
+
+//获取多选票的剩余预约数
+export const getSurplusNumber = id => {
+    return service({
+        url: `/reOrder/wap/getLastTicketByMany/${id}`,
+        method: 'get'
+    })
+}

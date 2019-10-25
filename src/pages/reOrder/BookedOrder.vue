@@ -25,6 +25,10 @@
             </p>
           </div>
         </div>
+        <div class="status">
+            <span class="status-back" v-if="item.orderStatus == 3">已退单</span>
+            <span class="status-booked" v-else>已预约</span>
+        </div>
       </li>
     </ul>
     <Tabbar />
@@ -71,6 +75,7 @@ export default {
 
 ul {
   li {
+    position: relative;
     background: #fff;
     padding: 0.4rem;
     border-radius: 0.2rem;
@@ -95,6 +100,26 @@ ul {
             color: #9c9c9c;
           }
         }
+      }
+    }
+    .status{
+      color:#fff;
+      position: absolute;
+      right:0.5rem;
+      top:3rem;
+      span{
+        display: block;
+        border-radius:50%;
+        width:3rem;
+        height:3rem;
+        line-height: 3rem;
+        text-align:center;
+      }
+      .status-back{
+        background:rgba(57,74,91,0.6)
+      }
+      .status-booked{
+        background: linear-gradient(to right, #fdc830, #f37335);
       }
     }
   }

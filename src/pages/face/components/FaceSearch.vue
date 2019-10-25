@@ -13,6 +13,7 @@
                 shape="round"
                 @search="onSearch"
                 @clear="handleClear"
+                @input="handleInput"
                 v-if="value == 0" 
                 v-model="faceForm.mobile"
                 >
@@ -24,6 +25,7 @@
                 shape="round"
                 @search="onSearch"
                 @clear="handleClear"
+                @input="handleInput"
                 v-if="value == 1" 
                 v-model="faceForm.name"
                 >
@@ -35,6 +37,7 @@
                 shape="round"
                 @search="onSearch"
                 @clear="handleClear"
+                @input="handleInput"
                 v-if="value == 2" 
                 v-model="faceForm.idCard"
                 >
@@ -46,13 +49,13 @@
                 shape="round"
                 @search="onSearch"
                 @clear="handleClear"
+                @input="handleInput"
                 v-if="value == 3" 
                 v-model="faceForm.orderNo"
                 >
                 <div slot="action" @click="onSearch">搜索</div>
             </van-search>
         </div>
-        <face-list :faceList="faceList"></face-list>
     </div>
 
 </template>
@@ -107,7 +110,6 @@ export default {
                         if(this.checkPhone(this.faceForm.mobile)){
                             this.deleteProperty(this.faceForm)
                             this.$emit('change',this.faceForm)
-                            console.log('触发change')
                         }
                         break;
                 case 1:
@@ -136,6 +138,7 @@ export default {
             }
         },
         changeValue(){
+            this.$emit('hideList',this.hideFaceList)
             this.faceForm = {
                 mobile:"",
                 name:"",
@@ -181,6 +184,9 @@ export default {
                 delete form.idCard
             if(form.orderNo == '')
                 delete form.orderNo
+        },
+        handleInput(value){
+            this.$emit('hideList',this.hideFaceList)  
         }
     }
 }

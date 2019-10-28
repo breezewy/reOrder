@@ -176,7 +176,7 @@ export default {
 <style scoped lang="scss">
 .homeContainer {
   box-sizing: border-box;
-  padding: 1rem 0.5rem 3rem;
+  padding: 0rem 0.5rem 3rem;
   .header{
     position: relative;
     background:#fff;

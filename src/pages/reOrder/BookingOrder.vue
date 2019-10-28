@@ -10,12 +10,14 @@
             label="预约日期"
             right-icon="arrow-down"
             placeholder="请选择预约日期"
+            disabled
             @click="selectDate"
             @click-right-icon="selectDate"
           />
           <van-field
             v-model="times"
             clearable
+            disabled
             label="预约场次"
             right-icon="arrow-down"
             placeholder="请选择预约场次"
@@ -52,7 +54,7 @@
     </div>
     <van-popup v-model="show" position="bottom" :style="{ height: '50%' }">
       <p>选择场次</p>
-      <van-radio-group v-model="radio">
+      <van-radio-group v-model="radio" v-if="showList.length>0">
         <van-cell-group>
           <van-cell
             :title="item.time"
@@ -241,25 +243,6 @@ export default {
           };
         }
         this.showConfirm = true;
-      // Dialog.confirm({
-      //   message: 
-      //   `
-      //    确定要预约吗?
-      //    预约日期：${this.date}
-      //    预约场次：${this.times}
-      //    数量：${this.number}
-      //   `
-      // }).then(() => {
-      //   downOrder(orderData).then(res => {
-      //     if (res.data.code != 200) {
-      //       return this.$toast(res.data.error);
-      //     }
-      //     this.$toast.success("预约成功");
-      //     this.$router.push("/booked");
-      //   });
-      // }).catch(() => {
-      //   console.log('取消')
-      // });
     },
     goBooking(){
         downOrder(this.orderData).then(res => {
@@ -277,12 +260,11 @@ export default {
 
 <style lang="scss">
 .main {
-  background: #f0eff5;
+  // background: #f0eff5;
   height: 100vh;
   box-sizing: border-box;
-  padding: 1rem 0.5rem 0;
+  padding: 0rem 0.5rem 0rem;
   .edit {
-    background: #fff;
     .van-cell {
       .van-cell__title {
         text-align: left;

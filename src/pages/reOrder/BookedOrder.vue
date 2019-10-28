@@ -68,11 +68,8 @@ export default {
 
 <style lang="scss" scoped>
 .bookedContainer{
-  background: #1e94db;
-  height: 100vh;
   box-sizing: border-box;
-  padding: 1rem 0.5rem 0;
-
+  padding: 0rem 0.5rem 3rem;
 ul {
   li {
     position: relative;

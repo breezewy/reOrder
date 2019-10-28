@@ -178,6 +178,7 @@ export default {
   box-sizing: border-box;
   padding: 1rem 0.5rem 3rem;
   .header{
+    position: relative;
     background:#fff;
     padding: 0.4rem;
     border-radius: 0.2rem;
@@ -201,8 +202,8 @@ export default {
     .status{
       color:#fff;
       position: absolute;
-      right:1rem;
-      top:2.8rem;
+      right:0.5rem;
+      bottom:0.4rem;
       span{
         display: block;
         border-radius:50%;

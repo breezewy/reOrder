@@ -106,7 +106,7 @@ ul {
       color:#fff;
       position: absolute;
       right:0.5rem;
-      top:3rem;
+      bottom:0.4rem;
       span{
         display: block;
         border-radius:50%;

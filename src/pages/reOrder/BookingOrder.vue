@@ -3,7 +3,7 @@
     <div class="main" v-if="hideCalendar">
       <div class="edit">
         <van-cell-group>
-          <van-cell title="票型" :value="ticketName" />
+          <van-cell  :value="ticketName" />
           <van-field
             v-model="date"
             clearable

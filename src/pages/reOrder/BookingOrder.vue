@@ -9,7 +9,7 @@
             clearable
             label="预约日期"
             right-icon="arrow-down"
-            placeholder="请选择预约日期"
+            :placeholder="defaultDateText"
             disabled
             @click="selectDate"
             @click-right-icon="selectDate"
@@ -20,7 +20,7 @@
             disabled
             label="预约场次"
             right-icon="arrow-down"
-            placeholder="请选择预约场次"
+            :placeholder="defaultShowText"
             @click="selectShow"
             @click-right-icon="selectShow"
             v-if="item.containShow"
@@ -132,6 +132,8 @@ export default {
       ticketName: "",
       id: "",
       calendarList: [],
+      defaultDateText:"请选择预约日期",
+      defaultShowText:"请选择预约场次",
       hideCalendar: true,
       calendarDate: null,
       show: false,
@@ -168,28 +170,31 @@ export default {
     this.getUserInfo(this.id);
   },
   methods: {
+    //点击预约日期行
     selectDate() {
+      if(this.calendarList.length == 0){
+        return 
+      }
       this.calendarDate = null;
       this.hideCalendar = false;
     },
+    //接口获取日期数据
     getCalendarList(id) {
       getCalendar(id).then(res => {
         if (res.data.code != 200) {
           this.$toast.fail(res.data.error);
         }
         this.calendarList = res.data.data;
+        if(this.calendarList.length == 0){
+          this.defaultDateText = "暂无可预约日期"
+          this.defaultShowText = "暂无可预约场次"
+        }
       });
     },
+    //点击日历时执行的函数
     getDate(obj) {
       this.date = FormatDate(obj);
       this.hideCalendar = true;
-    },
-    selectShow() {
-      if (this.date === "") {
-        this.$toast.fail("请先选择预约日期");
-        return;
-      }
-      this.show = true;
       let data = {
         date: this.date,
         id: this.item.id
@@ -199,8 +204,23 @@ export default {
           this.$toast.fail(res.data.error);
         }
         this.showList = res.data.data;
+        if(this.showList.length == 0){
+          this.defaultShowText = "暂无可预约场次"
+        }
       });
     },
+    //点击预约场次行执行的函数
+    selectShow() {
+      if(this.calendarList.length == 0 || this.showList.length == 0){
+        return 
+      }
+      if (this.date === "") {
+        this.$toast.fail("请先选择预约日期");
+        return;
+      }
+      this.show = true;
+    },
+    //获取用户信息
     getUserInfo(id) {
       getUserOrderInfo(id).then(res => {
         if (res.data.code != 200) {
@@ -209,11 +229,13 @@ export default {
         this.userInfo = res.data.data;
       });
     },
+    //选择场次时执行的函数
     clickRadio(item) {
       this.radio = item.time;
       this.times = this.radio;
       this.show = false;
     },
+    //点击预约按钮执行的函数
     handleClick() {
         if (this.item.containShow) {
           if (this.date === "") {
@@ -244,6 +266,7 @@ export default {
         }
         this.showConfirm = true;
     },
+    //确认框点击确认时执行的函数
     goBooking(){
         downOrder(this.orderData).then(res => {
           if (res.data.code != 200) {

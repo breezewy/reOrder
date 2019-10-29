@@ -33,6 +33,13 @@
                     <div class="title">产品名称：</div>
                     <div class="content">{{item.productName}}</div>
                 </div>
+                <div class="status">
+                    <span  class="Unpaid" v-if="item.orderStatus == 0 ||item.orderStatus == 1 || item.orderStatus ==2">未支付</span>
+                    <span  class="tobeconsumed" v-if="item.orderStatus == 3 || item.orderStatus ==4 || item.orderStatus ==5 || item.orderStatus ==6">待消费</span>
+                    <span class="consumption" v-if="item.orderStatus == 7">消费中</span>
+                    <span class="consumed" v-if="item.orderStatus == 8">已消费</span>
+                    <span class="returned-order" v-if="item.orderStatus == 9">已退单</span>
+                </div>
                 <div class="wrapper">
                      <div class="imgWrapper" v-for="innerItem of item.faceDetails" :key="innerItem.visitorId">
                         <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click="showPopUp01(innerItem)">
@@ -190,6 +197,36 @@ export default {
         .content{
             flex:1;
             padding-left:0.4rem;
+        }
+    }
+    .status{
+        text-align:center;
+        width:4rem;
+        line-height:1.2rem;
+        position: absolute;
+        top:0.3rem;
+        right:-1.2rem;
+        transform:rotate(45deg);
+        color:#fff;
+        span{
+            display: block;
+            width:100%;
+            height:100%;
+        }
+        .Unpaid{
+            background:#1E90FF
+        }
+        .tobeconsumed{
+            background:#008B8B
+        }
+        .consumption{
+            background:#3CB371
+        }
+        .consumed {
+            background:#f37335
+        }
+        .returned-order{
+            background:#2c3e50
         }
     }
     .wrapper{

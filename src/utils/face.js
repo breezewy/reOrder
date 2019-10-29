@@ -33,3 +33,10 @@ export const restoreFace = id => {
     })
 }
 
+//重设人脸
+export const rebuildFace = id => {
+    return service({
+        url: `/face/getBindFaceUrl/${id}`,
+        method: 'get'
+    })
+}

@@ -57,7 +57,9 @@
                 <div class="button">
                     <van-button type="info" size="small"  v-if="item.deleteFlag == 0" @click="resetFace(item.orderNo)">重置人脸</van-button>
                     <!-- <van-button type="warning" size="small" v-if="item.deleteFlag == 0" @click="deleteFace(item.id)">删除人脸</van-button> -->
-                    <van-button type="primary" size="small" v-if="item.deleteFlag == 1" @click="restoreFace(item.id)">恢复人脸</van-button>
+                    <van-button type="primary" size="small" v-if="item.deleteFlag == 1" @click="restoreFace(item.orderId)">恢复人脸</van-button>
+                    <van-button type="warning" size="small" v-if="showBtn(item)"  @click="rebuild(item.orderId)">重设人脸</van-button>
+
                 </div>
             </van-cell>
         </van-list>
@@ -68,7 +70,7 @@
 <script>
 import Vue from 'vue';
 import { Button } from 'vant';
-import { getFaceList,deleteFace,resetFace,restoreFace} from '../../../utils/face'
+import { getFaceList,deleteFace,resetFace,restoreFace, rebuildFace} from '../../../utils/face'
 import { Dialog } from 'vant';
 import { List } from 'vant';
 import { Popup } from 'vant';
@@ -179,6 +181,41 @@ export default {
                     this.$toast.success('操作成功')
                 })
             })
+        },
+        //是否显示重设人脸按钮
+        showBtn(item){
+            switch(item.isInput){
+                case '0':
+                     return false
+                     break;
+                case '1':
+                     return false
+                     break;
+                case '2':
+                     return false
+                     break;
+                case '7':
+                     return false
+                     break;
+                case '8':
+                     return false
+                     break;
+                case '9':
+                     return false
+                     break;
+                default:
+                     return true
+            }
+        },
+        //点击重设人脸按钮
+        rebuild(id){
+            rebuildFace(id).then(res=>{
+                if(res.data.code != 200){
+                    this.$toast.fail(res.data.error);
+                }
+                let url = res.data.data
+                window.open(url)
+            })
         }
     }
 }
@@ -214,19 +251,19 @@ export default {
             height:100%;
         }
         .Unpaid{
-            background:#1E90FF
+            background:#CBD0D7
         }
         .tobeconsumed{
-            background:#008B8B
+            background:#00dee5
         }
         .consumption{
-            background:#3CB371
+            background:#ffc500
         }
         .consumed {
-            background:#f37335
+            background:#0081ff
         }
         .returned-order{
-            background:#2c3e50
+            background:#ff9214
         }
     }
     .wrapper{

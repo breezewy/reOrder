@@ -55,11 +55,7 @@
                     </div>
                 </div>
                 <div class="button">
-                    <van-button type="info" size="small"  v-if="item.deleteFlag == 0" @click="resetFace(item.orderNo)">重置人脸</van-button>
-                    <!-- <van-button type="warning" size="small" v-if="item.deleteFlag == 0" @click="deleteFace(item.id)">删除人脸</van-button> -->
-                    <van-button type="primary" size="small" v-if="item.deleteFlag == 1" @click="restoreFace(item.orderId)">恢复人脸</van-button>
-                    <van-button type="warning" size="small" v-if="showBtn(item)"  @click="rebuild(item.orderId)">重设人脸</van-button>
-
+                    <van-button type="warning" size="small" v-if="showBtn(item)" @click="deleteFace(item.orderNo)">删除人脸</van-button>
                 </div>
             </van-cell>
         </van-list>
@@ -70,7 +66,7 @@
 <script>
 import Vue from 'vue';
 import { Button } from 'vant';
-import { getFaceList,deleteFace,resetFace,restoreFace, rebuildFace} from '../../../utils/face'
+import { getFaceList,deleteFace,resetFace} from '../../../utils/face'
 import { Dialog } from 'vant';
 import { List } from 'vant';
 import { Popup } from 'vant';
@@ -146,18 +142,6 @@ export default {
                 } 
             },500)
         },
-        resetFace(orderNo){
-            Dialog.confirm({
-                message: '确认允许重置人脸？'
-            }).then(() => {
-                resetFace(orderNo).then(res=>{
-                    if(res.data.code != 200){
-                        this.$toast.fail(res.data.error);
-                    }
-                    this.$toast.success('操作成功')
-                })
-            })
-        },
         deleteFace(id){
             Dialog.confirm({
                 message: '确认要删除人脸？'
@@ -170,53 +154,31 @@ export default {
                 })
             })
         },
-        restoreFace(id){
-            Dialog.confirm({
-                message: '确认要恢复人脸？'
-            }).then(() => {
-                restoreFace(id).then(res=>{
-                    if(res.data.code != 200){
-                        this.$toast.fail(res.data.error);
-                    }
-                    this.$toast.success('操作成功')
-                })
-            })
-        },
         //是否显示重设人脸按钮
         showBtn(item){
-            switch(item.isInput){
-                case '0':
-                     return false
+            switch(item.orderStatus){
+                case '3':
+                     return true
                      break;
-                case '1':
-                     return false
+                case '4':
+                     return true
                      break;
-                case '2':
-                     return false
+                case '5':
+                     return true
+                     break;
+                case '6':
+                     return true
                      break;
                 case '7':
-                     return false
+                     return true
                      break;
                 case '8':
-                     return false
-                     break;
-                case '9':
-                     return false
+                     return true
                      break;
                 default:
-                     return true
+                     return false
             }
         },
-        //点击重设人脸按钮
-        rebuild(id){
-            rebuildFace(id).then(res=>{
-                if(res.data.code != 200){
-                    this.$toast.fail(res.data.error);
-                }
-                let url = res.data.data
-                window.open(url)
-            })
-        }
     }
 }
 </script>

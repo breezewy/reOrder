@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="button">
-                    <van-button type="warning" size="small" v-if="showBtn(item)" @click="deleteFace(item.orderNo)">删除人脸</van-button>
+                    <van-button type="warning" size="small" v-if="showBtn(item)" @click="deleteFace(item.faceDetails[0].id)">删除人脸</van-button>
                 </div>
             </van-cell>
         </van-list>

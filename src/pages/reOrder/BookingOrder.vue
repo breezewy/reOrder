@@ -199,15 +199,18 @@ export default {
         date: this.date,
         id: this.item.id
       };
-      getShow(data).then(res => {
-        if (res.data.code != 200) {
-          this.$toast.fail(res.data.error);
-        }
-        this.showList = res.data.data;
-        if(this.showList.length == 0){
-          this.defaultShowText = "暂无可预约场次"
-        }
-      });
+      if(this.item.containShow){
+          getShow(data).then(res => {
+            if (res.data.code != 200) {
+              this.$toast.fail(res.data.error);
+            }
+              this.showList = res.data.data;
+            if (this.showList.length == 0){
+              this.defaultShowText = "暂无可预约场次"
+            }
+          });
+      }
+    
     },
     //点击预约场次行执行的函数
     selectShow() {

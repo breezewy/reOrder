@@ -18,25 +18,28 @@
        </div>
     </div>
 
-    <ul class="relate" v-if="ticketList && ticketList.length>0 && dmqTicket.productType != 2">
-      <li class="item" v-for="item of ticketList" :key="item.id">
-        <p class="item-name">{{item.name}}</p>
-        <div class="item-detail">
-          <div class="left" :class="{'line': item.number == 0}">
-            <span class="detail-title" >可预约数量：</span ><span class="detail-content">{{item.number}}</span>
-          </div>
-          <div class="right" v-if="item.number>0">
-              <span class="btn"  @click="handleBook(item)">去预约</span>
-          </div>
-          <div class="right" v-else>
-              <span class="unbtn">已预约</span>
+    <div  v-if="ticketList &&ticketList.length>0 && dmqTicket.productType != 2">
+      <div class="relate" v-for="(item,index) in ticketList" :key="index">
+        <div class="city">{{item.city}}</div>
+        <div class="item" v-for="(innerItem,index) in item.info" :key="index">
+          <p class="item-name">{{innerItem.name}}</p>
+          <div class="item-detail">
+            <div class="left" :class="{'line': innerItem.number == 0}">
+              <span class="detail-title" >可预约数量：</span ><span class="detail-content">{{innerItem.number}}</span>
+            </div>
+            <div class="right" v-if="innerItem.number>0">
+                <span class="btn"  @click="handleBook(innerItem)">去预约</span>
+            </div>
+            <div class="right" v-else>
+                <span class="unbtn">已预约</span>
+            </div>
           </div>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
+   
 
     <div class="moreChoose" v-if="dmqTicket.productType == 2">
-      <!-- <van-cell :title="number+'请选择'" :value="value" is-link @click="handleClick"/> -->
       <div class="choose" @click="handleClick">
         <span class="number">剩余数量：{{number}}</span>
         <span class="tips" v-if="number > 0">请选择出游景区</span>
@@ -51,8 +54,8 @@
         <van-radio-group v-model="radio">
           <div class="title">请选择</div>
           <van-cell-group>
-            <van-cell :title="item.name" clickable @click="clickCell(item)"  v-for="item of moreChooseList" :key="item.id">
-              <van-radio slot="right-icon" :name="item.id"/>
+            <van-cell :title='item.info.name' :value="item.city" clickable @click="clickCell(item.info)"  v-for="(item,index) of moreChooseList" :key="index">
+              <van-radio slot="right-icon" :name="item.info.id"/>
             </van-cell>
           </van-cell-group>
         </van-radio-group>
@@ -83,8 +86,10 @@ export default {
   data() {
     return {
       id: "",
-      ticketList: [],
+      ticketList:[],
+      ticketData:null,
       moreChooseList:[],
+      moreChooseData:null,
       dmqTicket:{},
       show:false,
       radio:"",
@@ -135,11 +140,27 @@ export default {
             return this.$toast.fail(res.data.error);
           }
           if(this.type != 2){
-            this.ticketList = res.data.data;
+            this.ticketData = res.data.data;
+            for(let key in this.ticketData){
+                let obj = {
+                  city:key,
+                  info:this.ticketData[key]
+                }
+                this.ticketList.push (obj)
+            }
           }else{
-            this.moreChooseList = res.data.data;
+            this.moreChooseData = res.data.data;
+            for(let key in this.moreChooseData){
+               for(let i = 0;i< this.moreChooseData[key].length;i++ ){
+                  let obj = {
+                  city:key,
+                  info:this.moreChooseData[key][i]
+                }
+                this.moreChooseList.push (obj)
+               }
+            }
           }
-          
+        
         });
       });
     },
@@ -216,7 +237,6 @@ export default {
         background:rgba(57,74,91,0.6)
       }
       .status-booked{
-        // background:rgba(57,74,91,0.6)
         background: linear-gradient(to right, #fdc830, #f37335);
       }
     }
@@ -225,7 +245,11 @@ export default {
   .relate{
     background:#fff;
     padding: 0.2rem 0.4rem 0.4rem;
+    margin-bottom:0.5rem;
     border-radius: 0.2rem;
+    .city{
+      line-height: 1.2rem;
+    }
     .item{
       background:#eee;
       padding:0.3rem  0.3rem 0.2rem;
@@ -291,15 +315,22 @@ export default {
       .van-cell__title{
         flex:0.3;
       }
-      .van-icon {
-        // flex:1
-      }
     }
     .van-popup{
       padding-top:0.2rem;
       .van-cell__title{
         flex:1;
         padding:0.2rem 0.4rem;
+      }
+      .van-cell__value{
+        flex:0.2;
+        padding:0.2rem 0.4rem;
+        text-align:center;
+        span{
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
       }
       .title{
         line-height: 1.2rem;

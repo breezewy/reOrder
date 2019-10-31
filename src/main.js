@@ -27,7 +27,6 @@ new Vue({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('aaaa')
   window.document.title = to.meta.title;
   next()
 })

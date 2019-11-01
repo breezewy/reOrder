@@ -12,10 +12,11 @@
        <div class="header-detail">
           <span class="detail-title">证件号：</span><span class="detail-content">{{dmqTicket.idCard}}</span>
       </div>
-       <div class="status">
+       <!-- <div class="status">
+            <span class="status-noBook" v-if="dmqTicket.orderStatus == 0">未预约</span>
             <span class="status-back" v-if="dmqTicket.orderStatus == 3">已退单</span>
-            <span class="status-booked" v-else>已预约</span>
-       </div>
+            <span class="status-booked" v-if="dmqTicket.orderStatus == 1">已预约</span>
+       </div> -->
     </div>
 
     <div  v-if="ticketList &&ticketList.length>0 && dmqTicket.productType != 2">
@@ -220,26 +221,26 @@ export default {
         flex:1;
       }
     }
-    .status{
-      color:#fff;
-      position: absolute;
-      right:0.5rem;
-      bottom:0.4rem;
-      span{
-        display: block;
-        border-radius:50%;
-        width:3rem;
-        height:3rem;
-        line-height: 3rem;
-        text-align:center;
-      }
-      .status-back{
-        background:rgba(57,74,91,0.6)
-      }
-      .status-booked{
-        background: linear-gradient(to right, #fdc830, #f37335);
-      }
-    }
+    // .status{
+    //   color:#fff;
+    //   position: absolute;
+    //   right:0.5rem;
+    //   bottom:0.4rem;
+    //   span{
+    //     display: block;
+    //     border-radius:50%;
+    //     width:3rem;
+    //     height:3rem;
+    //     line-height: 3rem;
+    //     text-align:center;
+    //   }
+    //   .status-back{
+    //     background:rgba(57,74,91,0.6)
+    //   }
+    //   .status-booked{
+    //     background: linear-gradient(to right, #fdc830, #f37335);
+    //   }
+    // }
   
   }
   .relate{

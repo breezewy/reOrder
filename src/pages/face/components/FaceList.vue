@@ -40,7 +40,7 @@
                     <span class="consumed" v-if="item.orderStatus == 8">已消费</span>
                     <span class="returned-order" v-if="item.orderStatus == 9">已退单</span>
                 </div>
-                <div class="wrapper">
+                <div class="wrapper" v-if="item.deleteFlag != 1">
                      <div class="imgWrapper"  v-for="innerItem of item.faceDetails" :key="innerItem.orderId">
                         <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click.stop="showPopUp01(innerItem)">
                         <img src="../../../assets/placeholder.png"  v-else>
@@ -147,6 +147,9 @@ export default {
             },500)
         },
         deleteFace(){
+            if(!this.deleteId){
+               return this.$toast('请先选择一组照片！')
+            }
             Dialog.confirm({
                 message: '确认要删除人脸？'
             }).then(() => {
@@ -154,7 +157,8 @@ export default {
                     if(res.data.code != 200){
                         return this.$toast.fail(res.data.error);
                     }
-                    this.$toast.success('操作成功')
+                    this.$toast.success('操作成功');
+                    this.getList();
                 })
             })
         },

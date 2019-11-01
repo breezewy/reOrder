@@ -199,7 +199,7 @@ export default {
         date: this.date,
         id: this.item.id
       };
-      if(this.item.containShow){
+    if(this.item.containShow){
           getShow(data).then(res => {
             if (res.data.code != 200) {
               this.$toast.fail(res.data.error);

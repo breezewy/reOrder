@@ -41,21 +41,22 @@
                     <span class="returned-order" v-if="item.orderStatus == 9">已退单</span>
                 </div>
                 <div class="wrapper">
-                     <div class="imgWrapper" v-for="innerItem of item.faceDetails" :key="innerItem.visitorId">
-                        <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click="showPopUp01(innerItem)">
+                     <div class="imgWrapper"  v-for="innerItem of item.faceDetails" :key="innerItem.orderId">
+                        <img :src="innerItem.faceUrl"  v-if="innerItem.faceUrl" @click.stop="showPopUp01(innerItem)">
                         <img src="../../../assets/placeholder.png"  v-else>
                         <van-popup v-model="ashow">
                             <img style='width:90vw;margin-right:0' :src="asrc" ref="aface">
                         </van-popup>
-                        <img :src="innerItem.aibeeFaceUrl" v-if="innerItem.aibeeFaceUrl"  @click="showPopUp02(innerItem)">
+                        <img :src="innerItem.aibeeFaceUrl" v-if="innerItem.aibeeFaceUrl"  @click.stop="showPopUp02(innerItem)">
                         <img src="../../../assets/placeholder.png"  v-else >
-                         <van-popup v-model="bshow">
+                        <van-popup v-model="bshow">
                             <img style='width:90vw;margin-right:0' :src="bsrc" ref="bface">
                         </van-popup>
+                        <van-icon name="passed"  class="icon" size="1rem" @click.stop="hasActive($event,innerItem.id)" />
                     </div>
                 </div>
                 <div class="button">
-                    <van-button type="warning" size="small" v-if="showBtn(item)" @click="deleteFace(item.faceDetails[0].id)">删除人脸</van-button>
+                    <van-button type="warning" size="small" v-if="showBtn(item)" @click="deleteFace">删除人脸</van-button>
                 </div>
             </van-cell>
         </van-list>
@@ -70,7 +71,9 @@ import { getFaceList,deleteFace,resetFace} from '../../../utils/face'
 import { Dialog } from 'vant';
 import { List } from 'vant';
 import { Popup } from 'vant';
+import { Icon } from 'vant';
 
+Vue.use(Icon);
 Vue.use(Popup);
 Vue.use(List);
 Vue.use(Dialog);
@@ -94,7 +97,8 @@ export default {
             ashow:false,
             bshow:false,
             asrc:"",
-            bsrc:""
+            bsrc:"",
+            deleteId:""
         }
     },
     created(){
@@ -142,13 +146,13 @@ export default {
                 } 
             },500)
         },
-        deleteFace(id){
+        deleteFace(){
             Dialog.confirm({
                 message: '确认要删除人脸？'
             }).then(() => {
-                deleteFace(id).then(res=>{
+                deleteFace(this.deleteId).then(res=>{
                     if(res.data.code != 200){
-                        this.$toast.fail(res.data.error);
+                        return this.$toast.fail(res.data.error);
                     }
                     this.$toast.success('操作成功')
                 })
@@ -179,6 +183,26 @@ export default {
                      return false
             }
         },
+        hasActive(e,id){
+            let iconList = document.querySelectorAll('.icon');
+            let warpperList =  document.querySelectorAll('.imgWrapper');
+            if(e.target.style.color == 'green'){
+                e.target.style.color =''
+                e.target.parentElement.style.border = '3px solid #fff'
+                this.deleteId = ''
+                return 
+            }else{
+                for(let i =0;i<iconList.length;i++){
+                    iconList[i].style.color = ''
+                }
+                for(let j = 0;j<warpperList.length;j++){
+                    warpperList[j].style.border = '3px solid #fff'
+                }
+                e.target.style.color ='green'
+                e.target.parentElement.style.border = '3px solid green'
+                this.deleteId = id
+            }
+        }
     }
 }
 </script>
@@ -235,9 +259,15 @@ export default {
             font-size:0;
             float:left;
             margin-top:0.2rem;
+            border:3px solid #fff;
             img{
                 width:3rem;
                 margin-right:0.2rem;
+            }
+            i{
+                position: relative;
+                top:-0.55rem;
+                right:0;
             }
         }
     }

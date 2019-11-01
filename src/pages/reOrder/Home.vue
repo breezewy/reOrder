@@ -124,9 +124,9 @@ export default {
         this.id = res.data.data.id;
         this.status = res.data.data.orderStatus;
         sessionStorage.setItem("orderId", this.id);
-        if(this.status == 3){
-           return 
-        }
+        // if(this.status == 3){
+        //    return 
+        // }
         if(this.type == 2){
             getSurplusNumber(this.id).then(res=>{
                 if (res.data.code != 200) {

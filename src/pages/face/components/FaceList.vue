@@ -52,7 +52,7 @@
                         <van-popup v-model="bshow">
                             <img style='width:90vw;margin-right:0' :src="bsrc" ref="bface">
                         </van-popup>
-                        <van-icon name="passed"  class="icon" size="1rem" @click.stop="hasActive($event,innerItem.id)" />
+                        <van-icon name="passed"  class="icon" size="1rem" @click.stop="hasActive($event,item.orderNo)" />
                     </div>
                 </div>
                 <div class="button">
@@ -187,7 +187,7 @@ export default {
                      return false
             }
         },
-        hasActive(e,id){
+        hasActive(e,orderNum){
             let iconList = document.querySelectorAll('.icon');
             let warpperList =  document.querySelectorAll('.imgWrapper');
             if(e.target.style.color == 'green'){
@@ -204,7 +204,7 @@ export default {
                 }
                 e.target.style.color ='green'
                 e.target.parentElement.style.border = '3px solid green'
-                this.deleteId = id
+                this.deleteId = orderNum
             }
         }
     }

@@ -11,8 +11,12 @@ import './assets/styles/border.css'
 import './assets/styles/reset.css'
 import { Toast } from "vant";
 import VueWechatTitle from 'vue-wechat-title'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 
+// require styles
+import 'swiper/dist/css/swiper.css'
 
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 Vue.use(VueWechatTitle)
 Vue.use(Toast);
 Vue.use(VueAxios, axios)

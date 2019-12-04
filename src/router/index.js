@@ -4,6 +4,7 @@ import Home from '@/pages/reOrder/Home'
 import BookedOrder from '@/pages/reOrder/BookedOrder'
 import BookingOrder from '@/pages/reOrder/BookingOrder'
 import Face from '@/pages/face/Face'
+import Programme from '@/pages/programme/Programme'
 Vue.use(Router)
 
 export default new Router({
@@ -44,6 +45,14 @@ export default new Router({
         title: '人脸订单查询'
       },
       component: Face
+    },
+    {
+      path: '/programme',
+      name: ' Programme',
+      meta: {
+        title: '演出节目单'
+      },
+      component: Programme
     }
   ]
 })

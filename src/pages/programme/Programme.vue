@@ -1,0 +1,83 @@
+<template>
+    <div class="programme">
+        <home-swiper :list="swiperList"></home-swiper>
+        <ul>
+            <li class="item" v-for="item in dataList" :key="item.id">
+                <div class="item_content">
+                    <span class="item_content_title">{{item.name}}</span>
+                    <span class="item_content_name">{{name}}</span>
+                    <a :href="item.url" class="item_content_arrow">>></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</template>
+
+<script>
+import HomeSwiper from './component/Swiper'
+import {getGuidance} from '../../utils/programme'
+export default {
+    name:"programme",
+    components:{
+        HomeSwiper,
+        name:""
+    },
+    data(){
+        return {
+            swiperList:[{
+                id:"001",
+                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
+            },
+            {
+                id:"002",
+                imgUrl:'https://51dmq.com/static/lajiaojie.jpg'
+            }],
+            dataList:[]
+        }
+    },
+    created(){
+        this.getGuidance(1)
+    },
+    methods:{
+        getGuidance(id){
+            getGuidance(id).then(res=>{
+                if (res.data.code != 200) {
+                    this.$toast.fail(res.data.error);
+                    return;
+                }
+                this.dataList = res.data.data.detailResponses
+                this.name = res.data.data.name
+            })
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+    .programme{
+        background:#fff;
+        min-height:100vh;
+        .item{
+            border-bottom:1px solid #ccc;
+            padding:0.5rem;
+            .item_content{
+                position: relative;
+                border:1px solid #ccc;
+                line-height: 1.8rem;
+                padding-left:0.5rem;
+                .item_content_arrow{
+                    display: inline-block;
+                    background:#777;
+                    padding:0.1rem 0.3rem;
+                    border-radius:1rem;
+                    line-height: 0.8rem;
+                    color:#fff;
+                    position: absolute;
+                    right:0.2rem;
+                    top:50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+    }
+</style>

@@ -6,6 +6,6 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   // API_ROOT: '"http://helper-api.dev.dmqwl.com"'
   // API_ROOT: '"https://helper-api.dmqwl.com"'
-  API_ROOT: '"http://192.168.11.85:21013"'
-  // API_ROOT: '"http://193.1.0.135:21014"'
+  // API_ROOT: '"http://192.168.11.85:21013"'
+  API_ROOT: '"http://193.1.0.135:21013"'
 })

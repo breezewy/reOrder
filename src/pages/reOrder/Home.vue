@@ -207,7 +207,6 @@ export default {
     margin-bottom: 1rem;
     .header-title{
       line-height: 1rem;
-
     }
     .header-detail{
       margin-top:0.5rem;

@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <img class="logo-bg" src="./assets/header-bg.jpg" alt="">
+    <img class="logo-bg" src="./assets/header-bg.jpg" v-if="hasString()">
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App"
+  name: "App",
+  methods:{
+    hasString(){
+      return window.location.href.indexOf('programme') == '-1'? true : false
+    }
+  }
 };
 </script>
 

@@ -5,7 +5,6 @@
             <li class="item" v-for="item in dataList" :key="item.id">
                 <div class="item_content">
                     <span class="item_content_title">{{item.name}}</span>
-                    <span class="item_content_name">{{name}}</span>
                     <a :href="item.url" class="item_content_arrow">>></a>
                 </div>
             </li>
@@ -19,8 +18,7 @@ import {getGuidance} from '../../utils/programme'
 export default {
     name:"programme",
     components:{
-        HomeSwiper,
-        name:""
+        HomeSwiper
     },
     data(){
         return {
@@ -30,23 +28,29 @@ export default {
             },
             {
                 id:"002",
-                imgUrl:'https://51dmq.com/static/lajiaojie.jpg'
+                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
             }],
             dataList:[]
         }
     },
     created(){
-        this.getGuidance(1)
+        this.getGuidance()
     },
     methods:{
-        getGuidance(id){
-            getGuidance(id).then(res=>{
+        getGuidance(){
+            getGuidance().then(res=>{
                 if (res.data.code != 200) {
                     this.$toast.fail(res.data.error);
                     return;
                 }
-                this.dataList = res.data.data.detailResponses
-                this.name = res.data.data.name
+                let data =  res.data.data;
+                data.forEach(item=>{
+                    if(item.id == '1'){
+                        item.detailResponses.forEach(res =>{
+                            this.dataList.push(res)
+                        })
+                    }
+                })
             })
         }
     }

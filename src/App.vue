@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img class="logo-bg" src="./assets/header-bg.jpg" v-if="hasString()">
+    <img class="logo-bg" src="./assets/header-bg.jpg" v-if="hasPath()">
     <router-view />
   </div>
 </template>
@@ -9,8 +9,15 @@
 export default {
   name: "App",
   methods:{
-    hasString(){
-      return window.location.href.indexOf('programme') == '-1'? true : false
+    hasPath(){
+      // return window.location.href.indexOf('programme') == '-1'? true : false 
+      if(window.location.href.indexOf('programme') != '-1'){
+        return false
+      }else if(window.location.href.indexOf('traffic') != '-1'){
+        return false
+      }else {
+        return true
+      }
     }
   }
 };

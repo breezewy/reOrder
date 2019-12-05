@@ -5,6 +5,7 @@ import BookedOrder from '@/pages/reOrder/BookedOrder'
 import BookingOrder from '@/pages/reOrder/BookingOrder'
 import Face from '@/pages/face/Face'
 import Programme from '@/pages/programme/Programme'
+import Traffic from '@/pages/programme/Traffic'
 Vue.use(Router)
 
 export default new Router({
@@ -53,6 +54,14 @@ export default new Router({
         title: '演出节目单'
       },
       component: Programme
+    },
+    {
+      path: '/traffic',
+      name: ' Traffic',
+      meta: {
+        title: '交通指南'
+      },
+      component: Traffic
     }
   ]
 })

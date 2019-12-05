@@ -74,8 +74,10 @@ import Tabbar from "../../components/Tabbar";
 import Vue from 'vue';
 import { Popup } from 'vant';
 import { Cell, CellGroup } from 'vant';
+import { Collapse, CollapseItem } from 'vant';
 import { Icon } from 'vant';
 
+Vue.use(Collapse).use(CollapseItem);
 Vue.use(Icon);
 Vue.use(Cell).use(CellGroup);
 Vue.use(Popup);

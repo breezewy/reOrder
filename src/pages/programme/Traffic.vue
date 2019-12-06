@@ -1,5 +1,5 @@
 <template>
-    <div class="traffic">
+    <div class="traffic" v-wechat-title="$route.meta.title">
         <home-swiper :list="swiperList"></home-swiper>
         <h1 class="title">{{title}}</h1>
         <van-collapse v-model="activeName" accordion>
@@ -25,11 +25,11 @@ export default {
         return {
             swiperList:[{
                 id:"001",
-                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
+                imgUrl:'https://static.dmqwl.com/booking/20191207/cc9b91ee1c3740b6bde1479684125aa2.jpg'
             },
             {
                 id:"002",
-                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
+                imgUrl:'https://static.dmqwl.com/booking/20191207/cc9b91ee1c3740b6bde1479684125aa2.jpg'
             }],
             activeName: ['0'],
             trafficList:[],

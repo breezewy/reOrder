@@ -1,5 +1,5 @@
 <template>
-    <div class="programme">
+    <div class="programme" v-wechat-title="$route.meta.title">
         <home-swiper :list="swiperList"></home-swiper>
         <ul>
             <li class="item" v-for="item in dataList" :key="item.id">
@@ -24,11 +24,11 @@ export default {
         return {
             swiperList:[{
                 id:"001",
-                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
+                imgUrl:'https://static.dmqwl.com/booking/20191207/cc9b91ee1c3740b6bde1479684125aa2.jpg'
             },
             {
                 id:"002",
-                imgUrl:'http://dmqmsg.51dmq.com/common/static/program.jpg'
+                imgUrl:'https://static.dmqwl.com/booking/20191207/cc9b91ee1c3740b6bde1479684125aa2.jpg'
             }],
             dataList:[]
         }

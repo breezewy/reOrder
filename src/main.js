@@ -31,7 +31,9 @@ new Vue({
 })
 
 router.beforeEach((to, from, next) => {
-  window.document.title = to.meta.title;
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
   next()
 })
 

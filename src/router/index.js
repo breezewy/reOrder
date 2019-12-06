@@ -51,7 +51,7 @@ export default new Router({
       path: '/programme',
       name: ' Programme',
       meta: {
-        title: '演出节目单'
+        title: '宋城旅游演出节目单'
       },
       component: Programme
     },
@@ -59,7 +59,7 @@ export default new Router({
       path: '/traffic',
       name: ' Traffic',
       meta: {
-        title: '交通指南'
+        title: '交通指南-宋城旅游'
       },
       component: Traffic
     }

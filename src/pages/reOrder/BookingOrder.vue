@@ -1,5 +1,6 @@
 <template>
   <div class="bookingContainer">
+    <!-- <van-loading type="spinner" color="#1989fa" /> -->
     <div class="main" v-if="hideCalendar">
       <div class="edit">
         <van-cell-group>
@@ -100,6 +101,7 @@ import { RadioGroup, Radio } from "vant";
 import { Stepper } from "vant";
 import { Divider } from "vant";
 import { Popup } from "vant";
+import { Loading } from 'vant';
 
 import {
   getCalendar,
@@ -113,7 +115,8 @@ import Calendar from "v-calendar/lib/components/calendar.umd";
 import DatePicker from "v-calendar/lib/components/date-picker.umd";
 import { Dialog } from 'vant';
 
-// 全局注册
+
+Vue.use(Loading);
 Vue.use(Dialog);
 Vue.use(RadioGroup);
 Vue.use(Radio);
@@ -130,6 +133,7 @@ export default {
       times: "",
       number: 1,
       ticketName: "",
+      loading:"",
       id: "",
       calendarList: [],
       defaultDateText:"请选择预约日期",
@@ -180,10 +184,16 @@ export default {
     },
     //接口获取日期数据
     getCalendarList(id) {
+      this.$toast.loading({
+        message: '加载中...',
+        forbidClick: true,
+        loadingType: 'spinner'
+      });
       getCalendar(id).then(res => {
         if (res.data.code != 200) {
           this.$toast.fail(res.data.error);
         }
+        this.$toast.clear();
         this.calendarList = res.data.data;
         if(this.calendarList.length == 0){
           this.defaultDateText = "暂无可预约日期"

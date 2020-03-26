@@ -26,10 +26,8 @@ export default {
 <style lang="scss">
 html,body{
   height:100%;
-  /* background: #1e94db; */
   background:url('./assets/body-bg.jpg') fixed;
   background-size: cover;
-
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

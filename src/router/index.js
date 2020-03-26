@@ -22,6 +22,7 @@ export default new Router({
         title: '订单列表'
       },
       component: Home
+      // component: (resolve) => require(['@/pages/reOrder/Home'],resolve)
     },
     {
       path: '/booked',
@@ -30,6 +31,7 @@ export default new Router({
         title: '已预约订单'
       },
       component: BookedOrder
+      // component: (resolve) => require(['@/pages/reOrder/BookedOrder'],resolve)
     },
     {
       path: '/booking',
@@ -38,6 +40,7 @@ export default new Router({
         title: '订单预约'
       },
       component: BookingOrder
+      // component: (resolve) => require(['@/pages/reOrder/BookingOrder'],resolve)
     },
     {
       path: '/face',
@@ -46,6 +49,7 @@ export default new Router({
         title: '人脸订单查询'
       },
       component: Face
+      // component: (resolve) => require(['@/pages/face/Face'],resolve)
     },
     {
       path: '/programme',
@@ -54,6 +58,7 @@ export default new Router({
         title: '宋城旅游演出节目单'
       },
       component: Programme
+      // component: (resolve) => require(['@/pages/programme/Programme'],resolve)
     },
     {
       path: '/traffic',
@@ -62,6 +67,7 @@ export default new Router({
         title: '交通指南-宋城旅游'
       },
       component: Traffic
+      // component: (resolve) => require(['@/pages/programme/Traffic'],resolve)
     }
   ]
 })

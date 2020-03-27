@@ -4,8 +4,8 @@
         <h1 class="title">{{title}}</h1>
         <van-collapse v-model="activeName" accordion>
             <van-collapse-item :title="item.name" :name="index"  v-for="(item,index) in trafficList" :key="item.id">
-                <div class="item" v-for="val in item.detailResponses" :key="val.id">
-                    <a :href="val.url">{{val.name}}</a>
+                <div class="item">
+                    <a :href="item.url">{{item.name}}</a>
                 </div>
             </van-collapse-item>
         </van-collapse>
@@ -47,13 +47,8 @@ export default {
                     return;
                 }
                 let data = res.data.data;
-                data.forEach(item=>{
-                    if(item.id == '2'){
-                        this.trafficList  = item.detailResponses
-                        this.title = item.name
-                    }
-                })
-              
+                this.title = data[1].name
+                this.trafficList = data[0].detailResponses
             })
         }
     }

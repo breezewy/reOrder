@@ -11,13 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/api': {
+      // '/': {
       //   target: 'http://193.1.0.135:21013',
-      //   // target: 'http://193.1.0.135:21014',
       //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api/': ''
-      //   }
       // }
     },
 
@@ -58,7 +54,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: false,
+    productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

@@ -19,8 +19,7 @@ module.exports = {
     'vue': 'Vue',
     'axios': 'axios',
     'vue-router': 'VueRouter',
-    'v-calendar': 'VCalendar',
-    'vue-awesome-swiper':'VueAwesomeSwiper'
+    'v-calendar': 'VCalendar'
   },
   output: {
     path: config.build.assetsRoot,

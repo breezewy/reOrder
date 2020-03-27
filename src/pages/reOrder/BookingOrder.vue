@@ -1,6 +1,5 @@
 <template>
   <div class="bookingContainer">
-    <!-- <van-loading type="spinner" color="#1989fa" /> -->
     <div class="main" v-if="hideCalendar">
       <div class="edit">
         <van-cell-group>
@@ -113,8 +112,8 @@ import { FormatDate } from "../../utils/Format";
 
 // import Calendar from "v-calendar/lib/components/calendar.umd";
 // import DatePicker from "v-calendar/lib/components/date-picker.umd";
-import { Dialog } from 'vant';
 
+import { Dialog } from 'vant';
 
 Vue.use(Loading);
 Vue.use(Dialog);
@@ -157,9 +156,13 @@ export default {
     };
   },
   components: {
-    Calendar,
-    DatePicker
+    Calendar:(resolve) => require(['v-calendar/lib/components/calendar.umd'],resolve),
+    DatePicker:(resolve) => require(['v-calendar/lib/components/date-picker.umd'],resolve)
   },
+  // components: {
+  //   Calendar,
+  //   DatePicker
+  // },
   created() {
     let type = sessionStorage.getItem('type');
     if(type != 2){

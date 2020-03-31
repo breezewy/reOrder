@@ -166,8 +166,8 @@ export default {
         { name: '选项', color: '#07c160' },
         { name: '身份证',value:'0'},
         { name: '护照',value:'1'},
-        { name: '港澳通行证', value:'2', disabled: true },
-        { name: '台湾通行证',value:'3',  disabled: true }
+        { name: '港澳通行证', value:'2'},
+        { name: '台湾通行证',value:'3'}
       ]
     };
   },

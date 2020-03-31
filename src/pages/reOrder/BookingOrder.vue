@@ -32,9 +32,16 @@
       </div>
       <div class="info">
         <van-cell-group>
-          <van-cell title="联系人" :value="userInfo.name" />
-          <van-cell title="手机号" :value="userInfo.mobile" />
-          <van-cell title="证件号" :value="userInfo.idCard" />
+          <van-field label="联系人" :readonly="item.updateLinkInfo" v-model="userInfo.name" placeholder="请输入联系人" />
+          <van-field label="手机号" type="tel" :readonly="item.updateLinkInfo" v-model="userInfo.mobile" placeholder="请输入手机号" />
+          <van-field label="证件号" :readonly="item.updateLinkInfo" v-model="userInfo.idCard" placeholder="请输入证件号" />
+          <van-cell title="证件类型" is-link arrow-direction="down" :value="userInfo.certificateType | checkType" @click="handleClickRightIcon"/>
+          <van-action-sheet
+            v-model="showActionSheet"
+            :actions="actions"
+            cancel-text="取消"
+            @select="onSelect"
+          />
         </van-cell-group>
       </div>
 
@@ -101,6 +108,7 @@ import { Stepper } from "vant";
 import { Divider } from "vant";
 import { Popup } from "vant";
 import { Loading } from 'vant';
+import { ActionSheet } from 'vant';
 
 import {
   getCalendar,
@@ -124,7 +132,7 @@ Vue.use(Divider);
 Vue.use(Cell).use(CellGroup);
 Vue.use(Field);
 Vue.use(Stepper);
-
+Vue.use(ActionSheet)
 export default {
   data() {
     return {
@@ -140,6 +148,7 @@ export default {
       hideCalendar: true,
       calendarDate: null,
       show: false,
+      showActionSheet:false,
       showConfirm:false,
       radio: "",
       userInfo: {},
@@ -152,7 +161,14 @@ export default {
         navMonths: "MMM",
         input: ["L", "YYYY-MM-DD", "YYYY/MM/DD"], // Only for `v-date-picker`
         dayPopover: "L" // Only for `v-date-picker`
-      }
+      },
+      actions: [
+        { name: '选项', color: '#07c160' },
+        { name: '身份证',value:'0'},
+        { name: '护照',value:'1'},
+        { name: '港澳通行证', value:'2', disabled: true },
+        { name: '台湾通行证',value:'3',  disabled: true }
+      ]
     };
   },
   components: {
@@ -163,6 +179,23 @@ export default {
   //   Calendar,
   //   DatePicker
   // },
+  filters:{
+    checkType(value) {
+       switch(value) {
+          case '0':
+            return '身份证'
+            break;
+          case '1':
+            return  '护照'
+            break;
+          case '2':
+            return  '港澳通行证'
+            break;
+          case '3':
+            return  '台湾通行证'
+       }
+    }
+  },
   created() {
     let type = sessionStorage.getItem('type');
     if(type != 2){
@@ -253,32 +286,65 @@ export default {
     },
     //点击预约按钮执行的函数
     handleClick() {
+        // 包含演出票
         if (this.item.containShow) {
           if (this.date === "") {
             this.$toast.fail("请先选择预约日期");
             return;
-          } else if (this.times === "") {
+          }
+          if (this.times === "") {
             this.$toast.fail("请先选择预约场次");
             return;
           }
-          this.orderData = {
-            number: this.number,
-            orderId: this.id,
-            playDate: this.date,
-            showTime: this.times,
-            ticketId: this.item.id
-          };
+          // 不能修改个人信息
+          if(this.item.updateLinkInfo){
+              this.orderData = {
+                number: this.number,
+                orderId: this.id,
+                playDate: this.date,
+                showTime: this.times,
+                ticketId: this.item.id
+              }
+          }else{
+              //可以修改个人信息 
+              this.orderData = {
+                number: this.number,
+                orderId: this.id,
+                playDate: this.date,
+                showTime: this.times,
+                ticketId: this.item.id,
+                name: this.userInfo.name,
+                mobile: this.userInfo.mobile,
+                idCard: this.userInfo.idCard,
+                certificateType: this.userInfo.certificateType
+              }
+          }
+        // 不含演出票
         } else {
           if (this.date === "") {
             this.$toast.fail("请先选择预约日期");
             return;
           }
-           this.orderData = {
-            number: this.number,
-            orderId: this.id,
-            playDate: this.date,
-            ticketId: this.item.id
-          };
+          if(this.item.updateLinkInfo){
+              this.orderData = {
+                number: this.number,
+                orderId: this.id,
+                playDate: this.date,
+                ticketId: this.item.id
+              }
+          }else{
+              this.orderData = {
+                number: this.number,
+                orderId: this.id,
+                playDate: this.date,
+                ticketId: this.item.id,
+                name: this.userInfo.name,
+                mobile: this.userInfo.mobile,
+                idCard: this.userInfo.idCard,
+                certificateType: this.userInfo.certificateType
+              }
+          }
+
         }
         this.showConfirm = true;
     },
@@ -291,13 +357,23 @@ export default {
           this.$toast.success("预约成功");
           this.$router.push("/booked");
         });
+    },
+    // 点击右箭头时触发
+    handleClickRightIcon() {
+      if(this.item.updateLinkInfo) return ;
+      this.showActionSheet = true
+    },
+    // 选择证件类型
+    onSelect(item) {
+      this.userInfo.certificateType = item.value
+      this.showActionSheet = false
     }
   }
 };
 </script>
 
 
-<style lang="scss">
+<style lang="scss" >
 .main {
   // background: #f0eff5;
   height: 100vh;

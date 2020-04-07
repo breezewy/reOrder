@@ -34,8 +34,8 @@
         <van-cell-group>
           <van-field label="联系人" :readonly="item.updateLinkInfo" v-model="userInfo.name" placeholder="请输入联系人" />
           <van-field label="手机号" type="tel" :readonly="item.updateLinkInfo" v-model="userInfo.mobile" placeholder="请输入手机号" />
+          <van-field label="证件类型" :readonly="item.updateLinkInfo"  v-model="getCertificateType"  right-icon="arrow-down" @click="handleClickRightIcon"/>
           <van-field label="证件号" :readonly="item.updateLinkInfo" v-model="userInfo.idCard" placeholder="请输入证件号" />
-          <van-cell title="证件类型" is-link arrow-direction="down" :value="userInfo.certificateType | checkType" @click="handleClickRightIcon"/>
           <van-action-sheet
             v-model="showActionSheet"
             :actions="actions"
@@ -179,23 +179,6 @@ export default {
   //   Calendar,
   //   DatePicker
   // },
-  filters:{
-    checkType(value) {
-       switch(value) {
-          case '0':
-            return '身份证'
-            break;
-          case '1':
-            return  '护照'
-            break;
-          case '2':
-            return  '港澳通行证'
-            break;
-          case '3':
-            return  '台湾通行证'
-       }
-    }
-  },
   created() {
     let type = sessionStorage.getItem('type');
     if(type != 2){
@@ -208,6 +191,17 @@ export default {
     this.ticketName = this.item.name;
     this.getCalendarList(this.item.id);
     this.getUserInfo(this.id);
+  },
+  computed:{
+    getCertificateType:{
+      get(){
+        let type = this.userInfo.certificateType
+        return type == '0'?'身份证': type == '1'?'护照': type == '2'?'港澳通行证': type== '3'?'台湾通行证':''
+      },
+      set(val){
+        this.userInfo.certificateType = val
+      }
+    }
   },
   methods: {
     //点击预约日期行

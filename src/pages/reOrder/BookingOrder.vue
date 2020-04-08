@@ -32,10 +32,10 @@
       </div>
       <div class="info">
         <van-cell-group>
-          <van-field label="联系人" :readonly="item.updateLinkInfo" v-model="userInfo.name" placeholder="请输入联系人" />
-          <van-field label="手机号" type="tel" :readonly="item.updateLinkInfo" v-model="userInfo.mobile" placeholder="请输入手机号" />
-          <van-field label="证件类型" :readonly="item.updateLinkInfo"  v-model="getCertificateType"  right-icon="arrow-down" @click="handleClickRightIcon"/>
-          <van-field label="证件号" :readonly="item.updateLinkInfo" v-model="userInfo.idCard" placeholder="请输入证件号" />
+          <van-field label="联系人" :readonly="userInfo.updateLinkInfo" v-model="userInfo.name" placeholder="请输入联系人" />
+          <van-field label="手机号" type="tel" :readonly="userInfo.updateLinkInfo" v-model="userInfo.mobile" placeholder="请输入手机号" />
+          <van-field label="证件类型" :readonly="userInfo.updateLinkInfo"  v-model="getCertificateType"  right-icon="arrow-down" @click="handleClickRightIcon"/>
+          <van-field label="证件号" :readonly="userInfo.updateLinkInfo" v-model="userInfo.idCard" placeholder="请输入证件号" />
           <van-action-sheet
             v-model="showActionSheet"
             :actions="actions"
@@ -291,7 +291,7 @@ export default {
             return;
           }
           // 不能修改个人信息
-          if(this.item.updateLinkInfo){
+          if(this.userInfo.updateLinkInfo){
               this.orderData = {
                 number: this.number,
                 orderId: this.id,
@@ -319,7 +319,7 @@ export default {
             this.$toast.fail("请先选择预约日期");
             return;
           }
-          if(this.item.updateLinkInfo){
+          if(this.userInfo.updateLinkInfo){
               this.orderData = {
                 number: this.number,
                 orderId: this.id,
@@ -354,7 +354,7 @@ export default {
     },
     // 点击右箭头时触发
     handleClickRightIcon() {
-      if(this.item.updateLinkInfo) return ;
+      if(this.userInfo.updateLinkInfo) return ;
       this.showActionSheet = true
     },
     // 选择证件类型

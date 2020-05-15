@@ -223,27 +223,6 @@ export default {
         flex:1;
       }
     }
-    // .status{
-    //   color:#fff;
-    //   position: absolute;
-    //   right:0.5rem;
-    //   bottom:0.4rem;
-    //   span{
-    //     display: block;
-    //     border-radius:50%;
-    //     width:3rem;
-    //     height:3rem;
-    //     line-height: 3rem;
-    //     text-align:center;
-    //   }
-    //   .status-back{
-    //     background:rgba(57,74,91,0.6)
-    //   }
-    //   .status-booked{
-    //     background: linear-gradient(to right, #fdc830, #f37335);
-    //   }
-    // }
-  
   }
   .relate{
     background:#fff;
@@ -313,14 +292,13 @@ export default {
     .title{
       line-height: 1.5rem;
     }
-    .van-cell{
-      padding:0;
-      .van-cell__title{
-        flex:0.3;
-      }
-    }
     .van-popup{
+      .van-cell{
+        padding:0;
+        font-size: 0.6rem;
+      }
       padding-top:0.2rem;
+      font-size: 0.6rem;
       .van-cell__title{
         flex:1;
         padding:0.2rem 0.4rem;
@@ -339,6 +317,7 @@ export default {
         line-height: 1.2rem;
         padding:0.3rem;
         text-align:center;
+        font-size: 0.7rem;
       }
       .van-radio{
         margin:0 0.2rem;

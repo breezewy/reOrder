@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tabbar">
     <van-tabbar v-model="active" router>
       <van-tabbar-item name="list" icon="home-o" :to="{path:`/home/${id}`}">票型列表</van-tabbar-item>
       <van-tabbar-item name="booked" icon="search" to="/booked">已预约订单</van-tabbar-item>
@@ -36,5 +36,8 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss" scoped>
+/deep/ .van-tabbar-item{
+   font-size: 0.7rem;
+}
 </style>

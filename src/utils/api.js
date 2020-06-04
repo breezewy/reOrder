@@ -22,9 +22,9 @@ export const getTicket = id => {
 
 //获取日历
 
-export const getCalendar = id => {
+export const getCalendar = (id,dmqOrderId) => {
     return service({
-        url: `/reOrder/wap/getCalendar/${id}`,
+        url: `/reOrder/wap/getCalendar/${id}/${dmqOrderId}`,
         method: 'get'
     })
 }

@@ -142,6 +142,7 @@ export default {
       ticketName: "",
       loading:"",
       id: "",
+      dmqOrderId:'',
       calendarList: [],
       defaultDateText:"请选择预约日期",
       defaultShowText:"请选择预约场次",
@@ -186,10 +187,10 @@ export default {
     }else{
       this.item = JSON.parse(sessionStorage.getItem("moreChooseItem"));
     }
-    
     this.id = sessionStorage.getItem("orderId");
+    this.dmqOrderId = sessionStorage.getItem("dmqOrderId");
     this.ticketName = this.item.name;
-    this.getCalendarList(this.item.id);
+    this.getCalendarList(this.item.id,this.dmqOrderId);
     this.getUserInfo(this.id);
   },
   computed:{
@@ -213,19 +214,19 @@ export default {
       this.hideCalendar = false;
     },
     //接口获取日期数据
-    getCalendarList(id) {
+    getCalendarList(id,dmqOrderId) {
       this.$toast.loading({
         message: '加载中...',
         forbidClick: true,
         loadingType: 'spinner'
       });
-      getCalendar(id).then(res => {
+      getCalendar(id,dmqOrderId).then(res => {
         if (res.data.code != 200) {
           this.$toast.fail(res.data.error);
         }
         this.$toast.clear();
         this.calendarList = res.data.data;
-        if(this.calendarList.length == 0){
+        if(this.calendarList  && this.calendarList.length == 0){
           this.defaultDateText = "暂无可预约日期"
           this.defaultShowText = "暂无可预约场次"
         }

@@ -171,9 +171,9 @@ export default {
       if(item.number == 0){
         return this.$toast('可预约数量为0');
       }
-      console.log(item)
       sessionStorage.setItem('type',this.type);
       sessionStorage.setItem("item", JSON.stringify(item));
+      sessionStorage.setItem('dmqOrderId',this.dmqTicket.dmqOrderId);
       this.$router.push({
         name: "booking"
       });

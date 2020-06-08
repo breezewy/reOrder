@@ -6,6 +6,7 @@ import BookingOrder from '@/pages/reOrder/BookingOrder'
 import Face from '@/pages/face/Face'
 import Programme from '@/pages/programme/Programme'
 import Traffic from '@/pages/programme/Traffic'
+import SearchOrder from '@/pages/searchOrder/SearchOrder'
 Vue.use(Router)
 
 export default new Router({
@@ -67,6 +68,15 @@ export default new Router({
         title: '交通指南-宋城旅游'
       },
       component: Traffic
+      // component: (resolve) => require(['@/pages/programme/Traffic'],resolve)
+    },
+    {
+      path: '/searchOrder',
+      name: ' searchOrder',
+      meta: {
+        title: '查询订单'
+      },
+      component: SearchOrder
       // component: (resolve) => require(['@/pages/programme/Traffic'],resolve)
     }
   ]

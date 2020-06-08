@@ -74,3 +74,11 @@ export const getSurplusNumber = id => {
         method: 'get'
     })
 }
+
+// 搜索订单
+export const searchOrder = mobile => {
+    return service({
+        url: `/reOrder/wap/searchOrder/${mobile}`,
+        method: 'get'
+    })
+}

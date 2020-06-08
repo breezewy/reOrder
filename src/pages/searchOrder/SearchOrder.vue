@@ -17,16 +17,20 @@
                 <div class="left">
                     <div class="item">
                         <span class="title">姓名:</span>
-                        <span class="name">{{item.linkName}}</span>
+                        <span class="content">{{item.linkName}}</span>
                     </div>
                     <div class="item">
                         <span class="title">手机号:</span>
-                        <span class="name">{{item.linkMobile}}</span>
+                        <span class="content">{{item.linkMobile}}</span>
+                    </div>
+                    <div class="item">
+                        <span class="title">产品名称:</span>
+                        <p class="productName">{{item.productName}}</p>
                     </div>
                 </div>
-                <div class="right">
+                <div class="right" @click.stop="goHomePage(item)">
                     <div class="btn">
-                        <span>去预约</span>
+                        <span>预约</span>
                     </div>
                 </div>
             </li>
@@ -82,32 +86,43 @@ export default {
             .orderList-item{
                 border:1px solid #666;
                 border-radius:0.3rem;
-                padding:0.1rem 0.4rem;
+                padding:0.4rem;
                 margin-bottom:0.4rem;
                 display: flex;
-                height:3rem;
                 .left{
                     height:100%;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    width:100%;
                     .item{
                         line-height: 1rem;
                         .title{
                             display: inline-block;
                             width:3rem;
                         }
+                        .content{
+                            display: inline-block;
+                            width:8rem;
+                        }
+                    }
+                    .item:last-child{
+                        display: flex;
+                        .productName{
+                            flex:1;
+                            padding-left:4px;
+                        }
                     }
                 }
                 .right{
-                    height:100%;
+                    height:auto;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
-                    margin-left:3rem;
                     .btn{
-                        padding:0.1rem 0.8rem;
                         border: 1px solid;
+                        padding:0.2rem 0;
+                        width:3rem;
                         height: 2rem;
                         background:#562e27;
                         border: none;
@@ -115,7 +130,6 @@ export default {
                         border-radius:0.3rem;
                         font-size: 0.7rem;
                         text-align: center;
-                        letter-spacing: 2px;
                         span{
                             display: inline-block;
                             width:100%;

@@ -126,9 +126,7 @@ export default {
         this.id = res.data.data.id;
         this.status = res.data.data.orderStatus;
         sessionStorage.setItem("orderId", this.id);
-        // if(this.status == 3){
-        //    return 
-        // }
+        sessionStorage.setItem('dmqOrderId',this.dmqTicket.dmqOrderId);
         if(this.type == 2){
             getSurplusNumber(this.id).then(res=>{
                 if (res.data.code != 200) {
@@ -173,7 +171,6 @@ export default {
       }
       sessionStorage.setItem('type',this.type);
       sessionStorage.setItem("item", JSON.stringify(item));
-      sessionStorage.setItem('dmqOrderId',this.dmqTicket.dmqOrderId);
       this.$router.push({
         name: "booking"
       });

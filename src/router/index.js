@@ -8,6 +8,7 @@ import Programme from '@/pages/programme/Programme'
 import Traffic from '@/pages/programme/Traffic'
 import SearchOrder from '@/pages/searchOrder/SearchOrder'
 import OrderSeat from '@/pages/orderSeat/OrderSeat'
+import ParkOrder from '@/pages/orderSeat/parkOrder'
 Vue.use(Router)
 
 export default new Router({
@@ -87,6 +88,15 @@ export default new Router({
         title: '座位信息'
       },
       component: OrderSeat
+      // component: (resolve) => require(['@/pages/programme/Traffic'],resolve)
+    },
+    {
+      path: '/parkOrder/:parkId',
+      name: 'parkOrder',
+      meta: {
+        title: '景区订单'
+      },
+      component: ParkOrder
       // component: (resolve) => require(['@/pages/programme/Traffic'],resolve)
     }
   ]

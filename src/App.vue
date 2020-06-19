@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img class="logo-bg" src="https://static.dmqwl.com/reOrder_header.jpg" v-if="hasPath()">
+    <img class="logo-bg" :src="src" v-if="hasPath()">
     <router-view />
   </div>
 </template>
@@ -8,6 +8,14 @@
 <script>
 export default {
   name: "App",
+  data(){
+    return {
+      src:'https://static.dmqwl.com/reOrder_header.jpg'
+    }
+  },
+  created(){
+    this.changeSrc()
+  },
   methods:{
     hasPath(){
       // return window.location.href.indexOf('programme') == '-1'? true : false 
@@ -18,6 +26,11 @@ export default {
       }else {
         return true
       }
+    },
+    changeSrc(){
+        if(window.location.href.indexOf('orderSeat') != '-1' || window.location.href.indexOf('parkOrder') != '-1'){
+            this.src = 'https://static.dmqwl.com/orderSeat_header.png'
+        }
     }
   }
 };

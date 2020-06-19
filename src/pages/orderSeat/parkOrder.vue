@@ -81,8 +81,7 @@ export default {
             if(!this.value){
                 return this.$toast.fail('请输入搜索条件')
             }
-            sessionStorage.removeItem("searchkey")
-            sessionStorage.removeItem("list")
+            this.removeCache()
             let reg = /^1[0-9]{10}$/
             if(reg.test(this.value)){
                 this.mobile = this.value
@@ -117,10 +116,15 @@ export default {
         // 清空搜索框
         onClear(){
             this.orderList = []
+            this.removeCache()
         },
         // 跳转到座位详情
         goOrderSeat(item){
             this.$router.push(`/orderSeat/${this.parkId}/${item.billoutno}`)
+        },
+        removeCache(){
+            sessionStorage.removeItem("searchkey")
+            sessionStorage.removeItem("list")
         }
     }
 }

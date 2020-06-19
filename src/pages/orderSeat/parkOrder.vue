@@ -66,11 +66,23 @@ export default {
             return FormatDate(value)
         }
     },
+    created(){
+        const searchkeyCache = sessionStorage.getItem("searchkey")
+        const listCache = sessionStorage.getItem("list")
+        if(searchkeyCache){
+            this.value = searchkeyCache
+        }
+        if(listCache){
+            this.orderList = JSON.parse(listCache)
+        }
+    },
     methods:{
         onSearch(){
             if(!this.value){
                 return this.$toast.fail('请输入搜索条件')
             }
+            sessionStorage.removeItem("searchkey")
+            sessionStorage.removeItem("list")
             let reg = /^1[0-9]{10}$/
             if(reg.test(this.value)){
                 this.mobile = this.value
@@ -82,6 +94,8 @@ export default {
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
+                    sessionStorage.setItem('searchkey',this.mobile)
+                    sessionStorage.setItem("list",JSON.stringify(res.data.data))
                     this.orderList = res.data.data
                 })
             }else{
@@ -94,6 +108,8 @@ export default {
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
+                    sessionStorage.setItem('searchkey',this.idCard)
+                    sessionStorage.setItem("list",JSON.stringify(res.data.data))
                     this.orderList = res.data.data
                 })
             }

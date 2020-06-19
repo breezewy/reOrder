@@ -17,7 +17,7 @@
                 <div class="left">
                     <div class="item">
                         <span class="title">演出日期:</span>
-                        <span class="content">{{item.performDate}}</span>
+                        <span class="content">{{item.traveldate | filtersTravelDate}}</span>
                     </div>
                     <div class="item">
                         <span class="title">演出场次:</span>
@@ -25,14 +25,14 @@
                     </div>
                     <div class="item">
                         <span class="title">手机号:</span>
-                        <span class="content">{{item.mobile}}</span>
+                        <span class="content">{{item.telno}}</span>
                     </div>
                     <div class="item">
                         <span class="title">证件号:</span>
-                        <span class="content">{{item.idCard}}</span>
+                        <span class="content">{{item.certno}}</span>
                     </div>
                 </div>
-                <div class="right" @click.stop="goHomePage(item)">
+                <div class="right" @click.stop="goOrderSeat(item)">
                     <div class="btn">
                         <span>座位</span>
                         <span>详情</span>
@@ -46,7 +46,8 @@
 <script>
 import Vue from 'vue';
 import { Search } from 'vant';
-import { getParkOrder } from "../../utils/orderSeat";
+import { getParkOrderList } from "../../utils/orderSeat";
+import { FormatDate } from "../../utils/Format";
 Vue.use(Search);
 
 export default {
@@ -60,6 +61,11 @@ export default {
             parkId:this.$route.params.parkId
         }
     },
+    filters:{
+        filtersTravelDate(value){
+            return FormatDate(value)
+        }
+    },
     methods:{
         onSearch(){
             if(!this.value){
@@ -68,7 +74,11 @@ export default {
             let reg = /^1[0-9]{10}$/
             if(reg.test(this.value)){
                 this.mobile = this.value
-                getParkOrder(this.parkId,this.mobile).then( res => {
+                const data = {
+                    parkId:"1252426677926236160",
+                    mobile:"18667125420",
+                }
+                getParkOrderList(data).then( res => {
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
@@ -76,31 +86,17 @@ export default {
                 })
             }else{
                 this.idCard = this.value
-                getParkOrder(this.parkId,this.idCard).then( res => {
+                const data = {
+                    parkId:this.parkId,
+                    idCard:this.idCard,
+                }
+                getParkOrderList(data).then( res => {
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
                     this.orderList = res.data.data
                 })
             }
-            // this.orderList = [{
-            //     idCard:'411023********1035',
-            //     mobile:'15658150268',
-            //     performDate:'2020-06-21',
-            //     performTime:'17:00'
-            // },
-            // {
-            //     idCard:'411023********1035',
-            //     mobile:'15658150268',
-            //     performDate:'2020-06-21',
-            //     performTime:'17:00'
-            // },
-            // {
-            //     idCard:'411023********1035',
-            //     mobile:'15658150268',
-            //     performDate:'2020-06-21',
-            //     performTime:'17:00'
-            // }]
         },
         // 清空搜索框
         onClear(){
@@ -108,7 +104,7 @@ export default {
         },
         // 跳转到座位详情
         goOrderSeat(item){
-            this.$router.push(`/orderSeat/${this.parkId}/${item.id}`)
+            this.$router.push(`/orderSeat/${this.parkId}/${item.billoutno}`)
         }
     }
 }

@@ -10,9 +10,10 @@ export const getOrderSeat = (parkId,orderId) => {
 }
 
 // 获取座位列表
-export const getParkOrder = (parkId,value) => {
+export const getParkOrderList = (data) => {
     return service({
-        url: `/offline/wap/getByParkOrder/${parkId}/${value}`,
-        method: 'get'
+        url: `/offline/wap/orderList`,
+        method: 'post',
+        data
     })
 }

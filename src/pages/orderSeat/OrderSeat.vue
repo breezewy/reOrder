@@ -87,6 +87,7 @@ export default {
         ul .orderSeatDetail{
             display: flex;
             border-bottom:1px solid #e7e9eb;
+            min-height:1.8rem;
             .item-title{
                 display:inline-block;
                 width:3.5rem;

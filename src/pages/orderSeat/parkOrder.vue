@@ -75,8 +75,8 @@ export default {
             if(reg.test(this.value)){
                 this.mobile = this.value
                 const data = {
-                    parkId:"1252426677926236160",
-                    mobile:"18667125420",
+                    parkId:this.parkId,
+                    mobile:this.mobile,
                 }
                 getParkOrderList(data).then( res => {
                     if (res.data.code != 200) {

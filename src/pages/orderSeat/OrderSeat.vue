@@ -1,20 +1,10 @@
 <template>
     <div class="orderSeat">
-        <!-- <van-cell-group>
-            <van-field v-model="orderSeat.performDate" label="演出日期"  readonly />
-            <van-field v-model="orderSeat.performTime" label="演出场次"  readonly />
-            <van-field v-model="orderSeat.locationName" label="剧院名称"  readonly />
-            <van-field v-model="orderSeat.name" label="联系人" readonly/>
-            <van-field v-model="orderSeat.telNo" label="联系方式" readonly/>
-            <van-field
-                v-model="orderSeat.detail[0].areaName"
-                rows="1"
-                autosize
-                label="座位号"
-                type="textarea"
-            />
-        </van-cell-group> -->
         <ul>
+            <li class="orderSeatItem">
+                <span class="item-title">订单状态</span>
+                <span class="item-content">{{orderSeat.webbillstatus | filterStatus}}</span>
+            </li>
             <li class="orderSeatItem">
                 <span class="item-title">演出日期</span>
                 <span class="item-content">{{orderSeat.performDate}}</span>
@@ -62,6 +52,11 @@ export default {
     },
     created(){
         this.getOrderDetail()
+    },
+    filters:{
+        filterStatus(value){
+            return value === 1 ? '正常' : '已退单'
+        }
     },
     methods:{
         // 获取订单详情

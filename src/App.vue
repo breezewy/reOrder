@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img class="logo-bg" src="https://static.dmqwl.com/header-bg.jpg" v-if="hasPath()">
+    <img class="logo-bg" src="https://static.dmqwl.com/reOrder_header.jpg" v-if="hasPath()">
     <router-view />
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
 <style lang="scss">
 html,body{
   height:100%;
-  background:url('https://static.dmqwl.com/body-bg.jpg') fixed;
+  background:url('https://static.dmqwl.com/reOrder_body.jpg') fixed;
   background-size: cover;
 }
 #app {

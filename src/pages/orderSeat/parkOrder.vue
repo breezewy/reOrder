@@ -40,6 +40,10 @@
                 </div>
             </li>
         </ul>
+        <div class="tips" v-if="showTips">
+            <img src="https://static.dmqwl.com/warning.jpg" alt="">
+            <p class="tips-content">未搜索到订单</p>
+        </div>
     </div>
 </template>
 
@@ -58,7 +62,8 @@ export default {
             mobile:'',
             idCard:'',
             value: '',
-            parkId:this.$route.params.parkId
+            parkId:this.$route.params.parkId,
+            showTips:false
         }
     },
     filters:{
@@ -78,10 +83,12 @@ export default {
     },
     methods:{
         onSearch(){
+            this.showTips = false
+            this.orderList = []
+            this.removeCache()
             if(!this.value){
                 return this.$toast.fail('请输入搜索条件')
             }
-            this.removeCache()
             let reg = /^1[0-9]{10}$/
             if(reg.test(this.value)){
                 this.mobile = this.value
@@ -90,6 +97,10 @@ export default {
                     mobile:this.mobile,
                 }
                 getParkOrderList(data).then( res => {
+                    if(!res.data.code || res.data.data.length == 0){
+                        this.showTips = true
+                        return 
+                    }
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
@@ -104,6 +115,10 @@ export default {
                     idCard:this.idCard,
                 }
                 getParkOrderList(data).then( res => {
+                    if(!res.data.code || res.data.data.length == 0){
+                        this.showTips = true
+                        return 
+                    }
                     if (res.data.code != 200) {
                         return this.$toast.fail(res.data.error);
                     }
@@ -117,11 +132,13 @@ export default {
         onClear(){
             this.orderList = []
             this.removeCache()
+            this.showTips = false
         },
         // 跳转到座位详情
         goOrderSeat(item){
             this.$router.push(`/orderSeat/${this.parkId}/${item.billoutno}`)
         },
+        // 清除缓存
         removeCache(){
             sessionStorage.removeItem("searchkey")
             sessionStorage.removeItem("list")
@@ -188,6 +205,20 @@ export default {
                 }
             }
 
+        }
+    }
+    .tips{
+        height:300px;
+        background:#fff;
+        text-align: center;
+        img {
+            width:4rem;
+            margin-top:1rem;
+        }
+        .tips-content{
+            line-height: 2rem;
+            font-size: 1rem;
+            margin-top:1rem;
         }
     }
 }

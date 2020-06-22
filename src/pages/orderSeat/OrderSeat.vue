@@ -3,7 +3,7 @@
         <ul>
             <li class="orderSeatItem">
                 <span class="item-title">演出剧幕</span>
-                <span class="item-content">{{parkId | filterPark}}</span>
+                <span class="item-content">{{orderSeat.showName}}</span>
             </li>
             <li class="orderSeatItem">
                 <span class="item-title">演出日期</span>
@@ -44,11 +44,6 @@ export default {
     },
     created(){
         this.getOrderDetail()
-    },
-    filters:{
-        filterPark(id){
-            return id === '1190160742800953344' ? '宋城千古情' : id === '1268123913867759616' ? '西安千古情' :''
-        }
     },
     methods:{
         // 获取订单详情

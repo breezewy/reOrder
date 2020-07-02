@@ -26,7 +26,8 @@
             v-if="item.containShow"
           ></van-field>
           <van-cell title="预约数量">
-            <van-stepper v-model="number" :max="item.number" />
+            <van-stepper v-if="!item.buyAll" v-model="number" :max="item.number" />
+            <span v-if="item.buyAll">{{item.number}}</span>
           </van-cell>
         </van-cell-group>
       </div>
@@ -90,9 +91,9 @@
              <span class="item-title">预约场次：</span>
              <span class="item-content">{{this.times}}</span>
            </div>
-            <div class="item">
+          <div class="item">
              <span class="item-title">预约数量：</span>
-             <span class="item-content">{{this.number}}</span>
+             <span class="item-content">{{this.item.buyAll ?  this.item.number :  this.number}}</span>
            </div>
         </div>
     </van-dialog>
@@ -294,7 +295,7 @@ export default {
           // 不能修改个人信息
           if(this.userInfo.updateLinkInfo){
               this.orderData = {
-                number: this.number,
+                number: this.item.buyAll ?  this.item.number :  this.number,
                 orderId: this.id,
                 playDate: this.date,
                 showTime: this.times,
@@ -303,7 +304,7 @@ export default {
           }else{
               //可以修改个人信息 
               this.orderData = {
-                number: this.number,
+                number: this.item.buyAll ?  this.item.number :  this.number,
                 orderId: this.id,
                 playDate: this.date,
                 showTime: this.times,
@@ -322,14 +323,14 @@ export default {
           }
           if(this.userInfo.updateLinkInfo){
               this.orderData = {
-                number: this.number,
+                number: this.item.buyAll ?  this.item.number :  this.number,
                 orderId: this.id,
                 playDate: this.date,
                 ticketId: this.item.id
               }
           }else{
               this.orderData = {
-                number: this.number,
+                number: this.item.buyAll ?  this.item.number :  this.number,
                 orderId: this.id,
                 playDate: this.date,
                 ticketId: this.item.id,

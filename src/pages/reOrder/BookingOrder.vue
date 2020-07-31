@@ -208,6 +208,7 @@ export default {
   methods: {
     //点击预约日期行
     selectDate() {
+      console.log('a')
       if(this.calendarList.length == 0){
         return 
       }
@@ -224,6 +225,7 @@ export default {
       getCalendar(id,dmqOrderId).then(res => {
         if (res.data.code != 200) {
           this.$toast.fail(res.data.error);
+          return 
         }
         this.$toast.clear();
         this.calendarList = res.data.data;
@@ -245,8 +247,9 @@ export default {
           getShow(data).then(res => {
             if (res.data.code != 200) {
               this.$toast.fail(res.data.error);
+              return 
             }
-              this.showList = res.data.data;
+            this.showList = res.data.data;
             if (this.showList.length == 0){
               this.defaultShowText = "暂无可预约场次"
             }
@@ -270,6 +273,7 @@ export default {
       getUserOrderInfo(id).then(res => {
         if (res.data.code != 200) {
           this.$toast.fail(res.data.error);
+          return 
         }
         this.userInfo = res.data.data;
       });

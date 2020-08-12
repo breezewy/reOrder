@@ -208,10 +208,11 @@ export default {
   methods: {
     //点击预约日期行
     selectDate() {
-      console.log('a')
       if(this.calendarList.length == 0){
         return 
       }
+      this.times = ''
+      this.defaultShowText = "请选择预约场次"
       this.calendarDate = null;
       this.hideCalendar = false;
     },
@@ -255,7 +256,6 @@ export default {
             }
           });
       }
-    
     },
     //点击预约场次行执行的函数
     selectShow() {
